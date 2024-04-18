@@ -1,0 +1,11 @@
+D:\LapTrinhCSDL\QLBK\BUS_QuanLyBK\bin\Debug\BUS_QuanLyBK.dll
+D:\LapTrinhCSDL\QLBK\BUS_QuanLyBK\bin\Debug\BUS_QuanLyBK.pdb
+D:\LapTrinhCSDL\QLBK\BUS_QuanLyBK\bin\Debug\DAL_QuanLyBK.dll
+D:\LapTrinhCSDL\QLBK\BUS_QuanLyBK\bin\Debug\DTO_QuanLyBK.dll
+D:\LapTrinhCSDL\QLBK\BUS_QuanLyBK\bin\Debug\DAL_QuanLyBK.pdb
+D:\LapTrinhCSDL\QLBK\BUS_QuanLyBK\bin\Debug\DTO_QuanLyBK.pdb
+D:\LapTrinhCSDL\QLBK\BUS_QuanLyBK\obj\Debug\BUS_QuanLyBK.csproj.AssemblyReference.cache
+D:\LapTrinhCSDL\QLBK\BUS_QuanLyBK\obj\Debug\BUS_QuanLyBK.csproj.CoreCompileInputs.cache
+D:\LapTrinhCSDL\QLBK\BUS_QuanLyBK\obj\Debug\BUS_QuanLyBK.dll
+D:\LapTrinhCSDL\QLBK\BUS_QuanLyBK\obj\Debug\BUS_QuanLyBK.pdb
+D:\LapTrinhCSDL\QLBK\BUS_QuanLyBK\obj\Debug\BUS_Quan.6BF1FDAA.Up2Date

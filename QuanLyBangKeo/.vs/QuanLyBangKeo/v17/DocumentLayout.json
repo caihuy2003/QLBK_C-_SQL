@@ -1,0 +1,153 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|d:\\laptrinhcsdl\\qlbk\\quanlybangkeo\\chitiethdb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|solutionrelative:chitiethdb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|d:\\laptrinhcsdl\\qlbk\\quanlybangkeo\\chitiethdb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|solutionrelative:chitiethdb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|d:\\laptrinhcsdl\\qlbk\\quanlybangkeo\\hoadonban.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|solutionrelative:hoadonban.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|d:\\laptrinhcsdl\\qlbk\\quanlybangkeo\\reporthdn.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|solutionrelative:reporthdn.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\reporthdb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|solutionrelative:reporthdb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\reporthdb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|solutionrelative:reporthdb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\chitiethdn.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|solutionrelative:chitiethdn.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\hoadonban.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|solutionrelative:hoadonban.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ChiTietHDB.cs [Design]",
+              "DocumentMoniker": "D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\ChiTietHDB.cs",
+              "RelativeDocumentMoniker": "ChiTietHDB.cs",
+              "ToolTip": "D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\ChiTietHDB.cs [Design]",
+              "RelativeToolTip": "ChiTietHDB.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-18T09:05:53.929Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ChiTietHDB.cs",
+              "DocumentMoniker": "D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\ChiTietHDB.cs",
+              "RelativeDocumentMoniker": "ChiTietHDB.cs",
+              "ToolTip": "D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\ChiTietHDB.cs",
+              "RelativeToolTip": "ChiTietHDB.cs",
+              "ViewState": "AQIAACABAAAAAAAAAAAAADIBAABSAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-18T08:32:11.024Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "HoaDonBan.cs [Design]",
+              "DocumentMoniker": "D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\HoaDonBan.cs",
+              "RelativeDocumentMoniker": "HoaDonBan.cs",
+              "ToolTip": "D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\HoaDonBan.cs [Design]",
+              "RelativeToolTip": "HoaDonBan.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-18T08:20:14.798Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ReportHDN.cs",
+              "DocumentMoniker": "D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\ReportHDN.cs",
+              "RelativeDocumentMoniker": "ReportHDN.cs",
+              "ToolTip": "D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\ReportHDN.cs",
+              "RelativeToolTip": "ReportHDN.cs",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAABwAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-17T18:35:32.212Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ReportHDB.cs",
+              "DocumentMoniker": "D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\ReportHDB.cs",
+              "RelativeDocumentMoniker": "ReportHDB.cs",
+              "ToolTip": "D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\ReportHDB.cs",
+              "RelativeToolTip": "ReportHDB.cs",
+              "ViewState": "AQIAABAAAAAAAAAAAAAAACAAAAAlAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-17T17:30:48.519Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ReportHDB.cs [Design]",
+              "DocumentMoniker": "D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\ReportHDB.cs",
+              "RelativeDocumentMoniker": "ReportHDB.cs",
+              "ToolTip": "D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\ReportHDB.cs [Design]",
+              "RelativeToolTip": "ReportHDB.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-17T17:30:15.726Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ChiTietHDN.cs",
+              "DocumentMoniker": "D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\ChiTietHDN.cs",
+              "RelativeDocumentMoniker": "ChiTietHDN.cs",
+              "ToolTip": "D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\ChiTietHDN.cs",
+              "RelativeToolTip": "ChiTietHDN.cs",
+              "ViewState": "AQIAAP0AAAAAAAAAAAAAABIBAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-14T08:06:38.718Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "HoaDonBan.cs",
+              "DocumentMoniker": "D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\HoaDonBan.cs",
+              "RelativeDocumentMoniker": "HoaDonBan.cs",
+              "ToolTip": "D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\HoaDonBan.cs",
+              "RelativeToolTip": "HoaDonBan.cs",
+              "ViewState": "AQIAAGEAAAAAAAAAAAAAAGwAAABKAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-17T17:59:26.383Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

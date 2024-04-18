@@ -1,0 +1,6 @@
+D:\LapTrinhCSDL\QLBK\DTO_QuanLyBK\bin\Debug\DTO_QuanLyBK.dll
+D:\LapTrinhCSDL\QLBK\DTO_QuanLyBK\bin\Debug\DTO_QuanLyBK.pdb
+D:\LapTrinhCSDL\QLBK\DTO_QuanLyBK\obj\Debug\DTO_QuanLyBK.csproj.AssemblyReference.cache
+D:\LapTrinhCSDL\QLBK\DTO_QuanLyBK\obj\Debug\DTO_QuanLyBK.csproj.CoreCompileInputs.cache
+D:\LapTrinhCSDL\QLBK\DTO_QuanLyBK\obj\Debug\DTO_QuanLyBK.dll
+D:\LapTrinhCSDL\QLBK\DTO_QuanLyBK\obj\Debug\DTO_QuanLyBK.pdb

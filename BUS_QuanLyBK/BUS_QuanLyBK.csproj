@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D26E1271-5AD2-465A-A7DA-82AC6E2F18F9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>BUS_QuanLyBK</RootNamespace>
+    <AssemblyName>BUS_QuanLyBK</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BUS_ChiTietHDB.cs" />
+    <Compile Include="BUS_ChiTietNhap.cs" />
+    <Compile Include="BUS_DangNhap.cs" />
+    <Compile Include="BUS_HoaDonBan.cs" />
+    <Compile Include="BUS_HoaDonNhap.cs" />
+    <Compile Include="BUS_KhachHang.cs" />
+    <Compile Include="BUS_LoaiSanPham.cs" />
+    <Compile Include="BUS_NhaCungCap.cs" />
+    <Compile Include="BUS_NhanVien.cs" />
+    <Compile Include="BUS_SanPham.cs" />
+    <Compile Include="BUS_TKBC.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DAL_QuanLyBK\DAL_QuanLyBK.csproj">
+      <Project>{5296c053-8666-4b14-b526-b1e48835b8c8}</Project>
+      <Name>DAL_QuanLyBK</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DTO_QuanLyBK\DTO_QuanLyBK.csproj">
+      <Project>{41612c4a-e0b0-4ea1-9f6a-8162f54e65a1}</Project>
+      <Name>DTO_QuanLyBK</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
