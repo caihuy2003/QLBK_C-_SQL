@@ -16,6 +16,7 @@ namespace QuanLyBangKeo
     {
         BUS_ChiTietHDB buscthdb=new BUS_ChiTietHDB();
         BUS_HoaDonBan bushoadonban = new BUS_HoaDonBan();
+        BUS_NhatKyHoatDong busnkhd=new BUS_NhatKyHoatDong();
         public ChiTietHDB()
         {
             InitializeComponent();
@@ -23,8 +24,24 @@ namespace QuanLyBangKeo
 
         private void ChiTietHDB_Load(object sender, EventArgs e)
         {
+            // TODO: This line of code loads data into the 'dataSet11.ChiTietHDB1' table. You can move, or remove it, as needed.
+            //this.chiTietHDB1TableAdapter.Fill(this.dataSet11.ChiTietHDB1);
             cbMaSP.DataSource = buscthdb.GetMaSanPham();
+            dgvct_hdb.DataSource = buscthdb.getChiTietHDB(txtMaHDB.Text);
             txtGiamGia.Text = Convert.ToDouble(0).ToString();
+            dgvct_hdb.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+
+            // Tự động điều chỉnh kích thước cột cuối cùng để vừa với chiều rộng DataGridView
+            dgvct_hdb.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            Image trashIcon = Properties.Resources.icons8_delete_50;
+            Image resizedIcon = new Bitmap(trashIcon, new Size(20, 20));
+            DataGridViewImageColumn imgColumn = new DataGridViewImageColumn();
+            imgColumn.Name = "DeleteColumn";
+            imgColumn.HeaderText = "";
+            imgColumn.Image = resizedIcon;
+            imgColumn.Width = 10;
+            //imgColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvct_hdb.Columns.Add(imgColumn);
         }
         public void SetMaHoaDonValue(string maHoaDon, string maNV,string maKH)
         {
@@ -82,11 +99,19 @@ namespace QuanLyBangKeo
                     if (int.TryParse(txtSoLuong.Text, out soluong) && int.TryParse(txtDGBan.Text, out dongiaban) && double.TryParse(txtGiamGia.Text,out giamgia) && int.TryParse(txtThanhTien.Text, out thanhtien))
                     {
                         soluong = Convert.ToInt32(txtSoLuong.Text);
-                        dongiaban = Convert.ToInt32(txtDGBan.Text);
-                        giamgia= Convert.ToDouble(txtGiamGia.Text);
-                        thanhtien = Convert.ToInt32(txtThanhTien.Text);
-                        DTO_ChiTietHDB ctb = new DTO_ChiTietHDB(txtMaHDB.Text, cbMaSP.Text, txtTenSP.Text, soluong, dongiaban,giamgia, thanhtien);
-                        buscthdb.addChiTietHDB(ctb, dataSet11);
+                        if (buscthdb.KiemTraSoLuong(cbMaSP.Text, soluong))
+                        {
+                            dongiaban = Convert.ToInt32(txtDGBan.Text);
+                            giamgia = Convert.ToDouble(txtGiamGia.Text);
+                            thanhtien = Convert.ToInt32(txtThanhTien.Text);
+                            DTO_ChiTietHDB ctb = new DTO_ChiTietHDB(txtMaHDB.Text, cbMaSP.Text, soluong, giamgia, thanhtien,txtGhiChu.Text);
+                            buscthdb.addChiTietHDB(ctb, dataSet11);
+                            dgvct_hdb.DataSource = bindingSource1;
+                        }
+                        else
+                        {
+                            MessageBox.Show("So luong khong du cung cap");
+                        }
                     }
                 }
                 else
@@ -100,52 +125,18 @@ namespace QuanLyBangKeo
             }
         }
 
-        private void btnEdit_Click(object sender, EventArgs e)
-        {
-            int soluong, dongiaban, thanhtien;
-            double giamgia;
-            if (int.TryParse(txtSoLuong.Text, out soluong) && int.TryParse(txtDGBan.Text, out dongiaban) && double.TryParse(txtGiamGia.Text, out giamgia) && int.TryParse(txtThanhTien.Text, out thanhtien))
-            {
-                soluong = Convert.ToInt32(txtSoLuong.Text);
-                dongiaban = Convert.ToInt32(txtDGBan.Text);
-                giamgia = Convert.ToDouble(txtGiamGia.Text);
-                thanhtien = Convert.ToInt32(txtThanhTien.Text);
-                DTO_ChiTietHDB ctb = new DTO_ChiTietHDB(txtMaHDB.Text, cbMaSP.Text, txtTenSP.Text, soluong, dongiaban,giamgia, thanhtien);
-                buscthdb.editChiTietHDB(ctb, dataSet11);
-            }
-        }
-
-        private void btnDelete_Click(object sender, EventArgs e)
-        {
-            if (dgvct_hdb.SelectedRows.Count > 0)
-            {
-                // Lấy row hiện tại
-                DataGridViewRow row = dgvct_hdb.SelectedRows[0];
-                // Xóa
-                if (buscthdb.XoaChiTietHDBTamThoi(txtMaHDB.Text, dataSet11))
-                {
-                    MessageBox.Show("Xóa thành công");
-                }
-                else
-                {
-                    MessageBox.Show("Xóa ko thành công");
-                }
-            }
-            else
-            {
-                MessageBox.Show("Hãy chọn thành viên muốn xóa");
-            }
-        }
 
         private void btnExcel_Click(object sender, EventArgs e)
         {
             Funtion.ToExcel(dgvct_hdb, @"D:\LapTrinhCSDL\QLBK", "_QL_ChiTietHoaDon", "chi tiet hoa don");
             MessageBox.Show("Xuất file Excel thành công");
+            DTO_NhatKyHoatDong nkhd = new DTO_NhatKyHoatDong(txtMaNV.Text, DateTime.Now, "Xuất file excel", "Xuất file chi tiết hóa đơn bán mã "+txtMaHDB.Text);
+            busnkhd.AddNKHD(nkhd);
         }
 
         private void btnCancle_Click(object sender, EventArgs e)
         {
-            dataSet11.Tables["ChiTietHDB"].Clear();
+            dataSet11.Tables["ChiTietHDB1"].Clear();
             this.Close();
         }
 
@@ -164,28 +155,6 @@ namespace QuanLyBangKeo
             ThanhTien();
         }
 
-        private void btnThanhToan_Click(object sender, EventArgs e)
-        {
-            if ( cbMaSP.Text != "" && txtSoLuong.Text != "")
-            {
-                this.Validate();
-                this.bindingSource1.EndEdit();
-                this.chiTietHDBTableAdapter.Update(this.dataSet11);
-                int tongTienBan = int.Parse(txttongthanhtoan.Text.Replace(",", ""));
-                DTO_HoaDonBan hdb = new DTO_HoaDonBan(txtMaHDB.Text + "    ", txtMaNV.Text,txtMaKH.Text,dtNgayLap.Value, tongTienBan);
-                if (bushoadonban.editHDB(hdb))
-                {
-                    buscthdb.CapNhatSoLuong(dataSet11);
-                    MessageBox.Show("Cập nhật thành công");
-                }
-                else
-                {
-                    MessageBox.Show("Cập nhật không thành công");
-                }
-                dataSet11.Tables["ChiTietHDB"].Clear();
-                this.Close();
-            }
-        }
 
         private void txtSoLuong_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -205,34 +174,10 @@ namespace QuanLyBangKeo
             }
         }
 
-        private void dgvct_hdb_SelectionChanged(object sender, EventArgs e)
-        {
-            if (dgvct_hdb.SelectedRows.Count > 0)
-            {
-                DataGridViewRow selectedRow = dgvct_hdb.SelectedRows[0];
-
-                string maSP = selectedRow.Cells[1].Value.ToString();
-                string tenSP = selectedRow.Cells[2].Value.ToString();
-                int soluong = (int)selectedRow.Cells[3].Value;
-                int dgban = (int)selectedRow.Cells[4].Value;
-                double giamgia = (double)selectedRow.Cells[5].Value;
-                int thanhtien = (int)selectedRow.Cells[6].Value;
-
-                // Gán dữ liệu lên các TextBox tương ứng
-                cbMaSP.Text = maSP;
-                txtTenSP.Text = tenSP;
-                txtSoLuong.Text = soluong.ToString();
-                txtDGBan.Text = dgban.ToString();
-                txtGiamGia.Text=giamgia.ToString();
-                txtThanhTien.Text = thanhtien.ToString();
-            }
-        }
-
+       
         private void ChiTietHDB_FormClosed(object sender, FormClosedEventArgs e)
         {
-            dataSet11.Tables["ChiTietHDB"].Clear();
-            HoaDonBan hdb =new HoaDonBan();
-            hdb.Show();
+            dataSet11.Tables["ChiTietHDB1"].Clear();
         }
         private bool inputChanged = false;
 
@@ -244,68 +189,98 @@ namespace QuanLyBangKeo
             }
         }
 
-        private void txttienkhachdua_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsDigit(e.KeyChar))
-            {
-                e.Handled = true;
-                txttienkhachdua.Focus();
-            }
-        }
 
-        private void txttienkhachdua_Leave(object sender, EventArgs e)
+        private void dgvct_hdb_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (inputChanged)
+            if (e.ColumnIndex == dgvct_hdb.Columns["DeleteColumn"].Index && e.RowIndex >= 0)
             {
-                if (!string.IsNullOrEmpty(txttienkhachdua.Text))
+                // Hiện hộp thoại xác nhận
+                DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn xóa hàng này không?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if (result == DialogResult.Yes)
                 {
-                    if (int.TryParse(txttienkhachdua.Text, out int tienkhachdua))
+                    // Lấy hàng hiện tại
+                    DataGridViewRow row = dgvct_hdb.Rows[e.RowIndex];
+
+                    // Gọi phương thức xóa trong lớp bus
+                    if (buscthdb.XoaChiTietHDBTamThoi(txtMaHDB.Text, dataSet11))
                     {
-                        int tt = int.Parse(txttongthanhtoan.Text.Replace(",", ""));
-                        if (tienkhachdua >= tt)
-                        {
-                            int tienthoi = tienkhachdua - tt;
-                            txtthoilaikhach.Text = tienthoi.ToString("#,##0");
-                        }
-                        else
-                        {
-                            MessageBox.Show("Khách chưa đưa đủ tiền");
-                            txttienkhachdua.Focus();
-                        }
+                        // Cập nhật lại DataSet sau khi xóa
+                        MessageBox.Show("Xóa thành công");
                     }
                     else
                     {
-                        MessageBox.Show("Vui lòng chỉ nhập số.");
-                        txttienkhachdua.Text = ""; // Xóa nội dung không hợp lệ
-                        txttienkhachdua.Focus();
+                        MessageBox.Show("Xóa không thành công");
                     }
                 }
             }
-            inputChanged = false;
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void btnThanhToan_Click_1(object sender, EventArgs e)
         {
-            if (cbMaSP.Text != "" && txtSoLuong.Text != "")
+            if (dgvct_hdb.RowCount > 1)
             {
-                this.Validate();
-                this.bindingSource1.EndEdit();
-                this.chiTietHDBTableAdapter.Update(this.dataSet11);
-                int tongTienBan = int.Parse(txttongthanhtoan.Text.Replace(",", ""));
-                DTO_HoaDonBan hdb = new DTO_HoaDonBan(txtMaHDB.Text + "    ", txtMaNV.Text, txtMaKH.Text, dtNgayLap.Value, tongTienBan);
-                if (bushoadonban.editHDB(hdb))
+                if (cbMaSP.Text != "" && txtSoLuong.Text != "")
                 {
-                    buscthdb.CapNhatSoLuong(dataSet11);
-                    MessageBox.Show("Cập nhật thành công");
+                    this.Validate();
+                    this.bindingSource1.EndEdit();
+                    this.chiTietHDB1TableAdapter.Update(this.dataSet11);
+                    int tongTienBan = int.Parse(txttongthanhtoan.Text.Replace(",", ""));
+                    DTO_HoaDonBan hdb = new DTO_HoaDonBan(txtMaHDB.Text + "    ", txtMaNV.Text, txtMaKH.Text, dtNgayLap.Value, tongTienBan, false);
+                    if (bushoadonban.editHDB(hdb))
+                    {
+                        buscthdb.CapNhatSoLuong(dataSet11);
+                        bushoadonban.CapNhatNoKhachHang(txtMaKH.Text,tongTienBan);
+                        MessageBox.Show("Cập nhật thành công");
+                        DTO_NhatKyHoatDong nkhd = new DTO_NhatKyHoatDong(txtMaNV.Text, DateTime.Now, "Tạo hóa đơn thành công", "Xác nhận tạo hóa đơn mới thành công mã "+txtMaHDB.Text+ " không in hóa đơn. Đơn chưa thanh toán!!!\nTổng tiền:" + tongTienBan);
+                        busnkhd.AddNKHD(nkhd);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Cập nhật không thành công");
+                    }
+                    dataSet11.Tables["ChiTietHDB1"].Clear();
+                    this.Close();
                 }
-                else
+            }
+            else
+            {
+                MessageBox.Show("Chua co san pham nao");
+            }
+        }
+
+        private void button3_Click_1(object sender, EventArgs e)
+        {
+            if (dgvct_hdb.RowCount > 1)
+            {
+                if (cbMaSP.Text != "" && txtSoLuong.Text != "")
                 {
-                    MessageBox.Show("Cập nhật không thành công");
+                    this.Validate();
+                    this.bindingSource1.EndEdit();
+                    this.chiTietHDB1TableAdapter.Update(this.dataSet11);
+                    int tongTienBan = int.Parse(txttongthanhtoan.Text.Replace(",", ""));
+                    DTO_HoaDonBan hdb = new DTO_HoaDonBan(txtMaHDB.Text + "    ", txtMaNV.Text, txtMaKH.Text, dtNgayLap.Value, tongTienBan, false);
+                    if (bushoadonban.editHDB(hdb))
+                    {
+                        buscthdb.CapNhatSoLuong(dataSet11);
+                        bushoadonban.CapNhatNoKhachHang(txtMaKH.Text, tongTienBan);
+                        MessageBox.Show("Cập nhật thành công");
+                        DTO_NhatKyHoatDong nkhd = new DTO_NhatKyHoatDong(txtMaNV.Text, DateTime.Now, "Tạo hóa đơn thành công", "Xác nhận tạo hóa đơn mới thành công mã " + txtMaHDB.Text + " có in hóa đơn. Đơn chưa thanh toán!!!\nTổng tiền:"+tongTienBan);
+                        busnkhd.AddNKHD(nkhd);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Cập nhật không thành công");
+                    }
+                    dataSet11.Tables["ChiTietHDB1"].Clear();
+                    ReportHDB rphdb = new ReportHDB();
+                    rphdb.SetMaHoaDonValue(txtMaHDB.Text, txtMaNV.Text, txtMaKH.Text);
+                    rphdb.ShowDialog();
                 }
-                dataSet11.Tables["ChiTietHDB"].Clear();
-                ReportHDB rphdb = new ReportHDB();
-                rphdb.SetMaHoaDonValue(txtMaHDB.Text, txtMaNV.Text, txtMaKH.Text);
-                rphdb.Show();
+            }
+            else
+            {
+                MessageBox.Show("Chua co san pham nao");
             }
         }
 
@@ -328,9 +303,9 @@ namespace QuanLyBangKeo
             {
                 DataGridViewRow row1 = dgvct_hdb.Rows[i - 1];
 
-                if (row1.Cells[6].Value != null)
+                if (row1.Cells[7].Value != null)
                 {
-                    tong += int.Parse(row1.Cells[6].Value.ToString());
+                    tong += int.Parse(row1.Cells[7].Value.ToString());
                 }
                 else
                 {

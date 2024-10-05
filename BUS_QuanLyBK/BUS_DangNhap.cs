@@ -10,13 +10,17 @@ namespace BUS_QuanLyBK
     public class BUS_DangNhap
     {
         DAL_DangNhap daldangnhap= new DAL_DangNhap();
-        public bool KiemTraTonTaiChucVuNV(string chucvu)
+        public bool KiemTraTaiKhoan(string taikhoan)
         {
-            return daldangnhap.KiemTraTonTaiChucVuNV(chucvu);
+            return daldangnhap.KiemTraTaiKhoan(taikhoan);
         }
-        public bool KiemTraTonTaiNV(string chucvu,string matkhau)
+        public bool KiemTraTonTaiNV(string taikhoan,string matkhau)
         {
-            return daldangnhap.KiemTraTonTaiNV(chucvu,matkhau);
+            return daldangnhap.KiemTraTonTaiNV(taikhoan,matkhau);
+        }
+        public (string MaNV,string HoTenNV, string tenQuyen, byte[] hinhanh) LayTenVaQuyen(string taikhoan, string matkhau)
+        {
+            return daldangnhap.LayTenVaQuyen(taikhoan,matkhau);
         }
     }
 }

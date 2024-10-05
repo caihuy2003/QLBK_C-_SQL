@@ -16,7 +16,7 @@ namespace QuanLyBangKeo
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new HoaDonBan());
+            Application.Run(new DangNhap());
         }
     }
 }

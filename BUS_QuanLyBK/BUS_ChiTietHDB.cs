@@ -13,9 +13,9 @@ namespace BUS_QuanLyBK
     public class BUS_ChiTietHDB
     {
         DAL_ChiTietHDB dalchitiethdb = new DAL_ChiTietHDB();
-        public DataTable getChiTietNhap(string MaHDN)
+        public DataTable getChiTietHDB(string MaHDB)
         {
-            return dalchitiethdb.getChiTietHDB(MaHDN);
+            return dalchitiethdb.getChiTietHDB(MaHDB);
         }
         public bool addChiTietHDB(DTO_ChiTietHDB ct_hdb, DataSet dataSet)
         {
@@ -29,13 +29,13 @@ namespace BUS_QuanLyBK
         {
             return dalchitiethdb.XoaChiTietHDBTamThoi(maHDB, dataSet);
         }
-        public bool deleteChiTietHDB(string maHDB)
+        public bool deleteChiTietHDB(string maHDB,string MaSP)
         {
-            return dalchitiethdb.deleteChiTietHDB(maHDB);
+            return dalchitiethdb.deleteChiTietHDB(maHDB,MaSP);
         }
         public void CapNhatSoLuong(DataSet ds)
         {
-            foreach (DataRow row in ds.Tables["ChiTietHDB"].Rows)
+            foreach (DataRow row in ds.Tables["ChiTietHDB1"].Rows)
             {
                 string MaSP = row["MaSP"].ToString();
                 int soluong = Convert.ToInt32(row["SLBan"]);
@@ -71,6 +71,18 @@ namespace BUS_QuanLyBK
         public DataSet GetHoaDonBanHangByMaHDB(string MaHDB, string MaNV,string MaKH)
         {
             return dalchitiethdb.GetHoaDonBanHangByMaHDB(MaHDB,MaNV,MaKH);
+        }
+        public bool KiemTraSoLuong(string MaSP, int soluong)
+        {
+            return dalchitiethdb.KiemTraSoLuong(MaSP, soluong);
+        }
+        public bool KiemTraTrungMaHDB(string MaHDB)
+        {
+            return dalchitiethdb.KiemTraTrungMaHDB(MaHDB);
+        }
+        public bool XoaChiTietBan(string MaHDB, string MaSP)
+        {
+            return dalchitiethdb.XoaChiTietBan(MaHDB, MaSP);
         }
     }
 }

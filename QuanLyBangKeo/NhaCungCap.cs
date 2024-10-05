@@ -17,47 +17,72 @@ namespace QuanLyBangKeo
     public partial class NhaCungCap : Form
     {
         BUS_NhaCungCap busNCC = new BUS_NhaCungCap();
-
-        public NhaCungCap()
+        BUS_NhatKyHoatDong busnkhd=new BUS_NhatKyHoatDong();
+        private string MaNV;
+        public NhaCungCap(string MaNV)
         {
             InitializeComponent();
+            this.MaNV = MaNV;
         }
 
         private void NhaCungCap_Load(object sender, EventArgs e)
         {
             dgvNCC.DataSource = busNCC.getNhaCungCap();
-            int totalWidth = dgvNCC.Width - dgvNCC.RowHeadersWidth;
-            int columnCount = dgvNCC.Columns.Count;
-            int averageWidth = totalWidth / columnCount;
-
-            // Gán kích thước trung bình cho mỗi cột
-            foreach (DataGridViewColumn column in dgvNCC.Columns)
-            {
-                column.Width = averageWidth;
-            }
+            dgvNCC.RowTemplate.Height = 30;
+            dgvNCC.RowsDefaultCellStyle.BackColor = Color.DarkSlateBlue;
+            dgvNCC.AlternatingRowsDefaultCellStyle.BackColor = Color.SlateBlue;
+            dgvNCC.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            // Tự động điều chỉnh kích thước cột cuối cùng để vừa với chiều rộng DataGridView
+            dgvNCC.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvNCC.Columns["DiaChiNCC"].Width = 200;
+            dgvNCC.Columns["MaNCC"].Width = 100;
+            Image trashIcon = Properties.Resources.icons8_delete_50;
+            Image resizedIcon = new Bitmap(trashIcon, new Size(20, 20));
+            DataGridViewImageColumn imgColumn = new DataGridViewImageColumn();
+            imgColumn.Name = "DeleteColumn";
+            imgColumn.HeaderText = "";
+            imgColumn.Image = resizedIcon;
+            imgColumn.Width = 10;
+            //imgColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvNCC.Columns.Add(imgColumn);
         }
 
-        private void dgvNCC_Click(object sender, DataGridViewCellEventArgs e)
+    
+        private void ResetValue()
+        {
+            txtMaNCC.Text = "";
+            txtTenNCC.Text = "";
+            txtSDT_NCC.Text = "";
+            txtFind.Text = "";
+            cbFind.SelectedIndex = -1;
+            txtDiaChi_NCC.Text = "";
+            txtGhiChu.Text = "";
+        }
+
+        private void dgvNCC_Click(object sender, EventArgs e)
         {
             DataGridViewRow row = dgvNCC.SelectedRows[0];
             txtMaNCC.Text = row.Cells[1].Value.ToString();
             txtTenNCC.Text = row.Cells[2].Value.ToString();
             txtSDT_NCC.Text = row.Cells[3].Value.ToString();
-            txtDiaChiNCC.Text = row.Cells[4].Value.ToString();
+            txtDiaChi_NCC.Text = row.Cells[4].Value.ToString();
+            txtGhiChu.Text = row.Cells[5].Value.ToString();
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void btnAdd_Click_1(object sender, EventArgs e)
         {
             if (!busNCC.KiemTraMaNhaCungCap(txtMaNCC.Text))
             {
-                if (txtMaNCC.Text != "" && txtTenNCC.Text != "" && txtDiaChiNCC.Text != "")
+                if (txtMaNCC.Text != "" && txtTenNCC.Text != "" && txtDiaChi_NCC.Text != "")
                 {
                     // Tạo DTo
-                    DTO_NhaCungCap ncc = new DTO_NhaCungCap(txtMaNCC.Text, txtTenNCC.Text, txtDiaChiNCC.Text, txtSDT_NCC.Text);
+                    DTO_NhaCungCap ncc = new DTO_NhaCungCap(txtMaNCC.Text, txtTenNCC.Text, txtDiaChi_NCC.Text, txtSDT_NCC.Text,txtGhiChu.Text);
                     if (busNCC.addNhaCungCap(ncc))
                     {
                         MessageBox.Show("Thêm thành công");
                         dgvNCC.DataSource = busNCC.getNhaCungCap(); // refresh datagridview
+                        DTO_NhatKyHoatDong nkhd = new DTO_NhatKyHoatDong(MaNV, DateTime.Now, "Thêm nhà cung cấp", "Thêm nhà cung cấp mã " + txtMaNCC.Text);
+                        busnkhd.AddNKHD(nkhd);
                     }
                     else
                     {
@@ -76,31 +101,33 @@ namespace QuanLyBangKeo
             }
         }
 
-        private void btnEdit_Click(object sender, EventArgs e)
+        private void btnEdit_Click_1(object sender, EventArgs e)
         {
             if (dgvNCC.SelectedRows.Count > 0)
             {
-                    if (txtTenNCC.Text != "" && txtDiaChiNCC.Text != "")
+                if (txtTenNCC.Text != "" && txtDiaChi_NCC.Text != "")
+                {
+                    // Lấy row hiện tại
+                    DataGridViewRow row = dgvNCC.SelectedRows[0];
+                    // Tạo DTO
+                    DTO_NhaCungCap ncc = new DTO_NhaCungCap(txtMaNCC.Text, txtTenNCC.Text, txtDiaChi_NCC.Text, txtSDT_NCC.Text,txtGhiChu.Text);
+                    // Sửa
+                    if (busNCC.editNhaCungCap(ncc))
                     {
-                        // Lấy row hiện tại
-                        DataGridViewRow row = dgvNCC.SelectedRows[0];
-                        // Tạo DTO
-                        DTO_NhaCungCap ncc = new DTO_NhaCungCap(txtMaNCC.Text, txtTenNCC.Text, txtDiaChiNCC.Text, txtSDT_NCC.Text);
-                        // Sửa
-                        if (busNCC.editNhaCungCap(ncc))
-                        {
-                            MessageBox.Show("Sửa thành công");
-                            dgvNCC.DataSource = busNCC.getNhaCungCap();
-                        }
-                        else
-                        {
-                            MessageBox.Show("Sửa ko thành công");
-                        }
+                        MessageBox.Show("Sửa thành công");
+                        dgvNCC.DataSource = busNCC.getNhaCungCap();
+                        DTO_NhatKyHoatDong nkhd = new DTO_NhatKyHoatDong(MaNV, DateTime.Now, "Sửa nhà cung cấp", "Sửa thông tin nhà cung cấp mã " + txtMaNCC.Text);
+                        busnkhd.AddNKHD(nkhd);
                     }
                     else
                     {
-                        MessageBox.Show("Xin hãy nhập đầy đủ");
+                        MessageBox.Show("Sửa ko thành công");
                     }
+                }
+                else
+                {
+                    MessageBox.Show("Xin hãy nhập đầy đủ");
+                }
             }
             else
             {
@@ -108,42 +135,22 @@ namespace QuanLyBangKeo
             }
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
+        private void btnExcel_Click_1(object sender, EventArgs e)
         {
-            if (dgvNCC.SelectedRows.Count > 0)
-            {
-                DataGridViewRow row = dgvNCC.SelectedRows[0];
-                // Xóa
-                if (busNCC.deleteNhaCungCap(txtMaNCC.Text))
-                {
-                    MessageBox.Show("Xóa thành công");
-                    dgvNCC.DataSource = busNCC.getNhaCungCap();
-                }
-                else
-                {
-                    MessageBox.Show("Xóa ko thành công");
-                }
-            }
-            else
-            {
-                MessageBox.Show("Hãy chọn thành viên muốn xóa");
-            }
-        }
-
-        private void btnExcel_Click(object sender, EventArgs e)
-        {
-            Funtion.ToExcel(dgvNCC, @"D:\LapTrinhCSDL\QLBK", "_QL_NCC", "nhà cung cấp");
+            Funtion.ToExcel(dgvNCC, @"E:\", "_QL_NCC", "nhà cung cấp");
             MessageBox.Show("Xuất file Excel thành công");
+            DTO_NhatKyHoatDong nkhd = new DTO_NhatKyHoatDong(MaNV, DateTime.Now, "Xuất file excel", "Xuất file nhà cung cấp");
+            busnkhd.AddNKHD(nkhd);
         }
 
-        private void btnCancle_Click(object sender, EventArgs e)
+        private void btnCancel_Click(object sender, EventArgs e)
         {
             ResetValue();
             dgvNCC.DataSource = busNCC.getNhaCungCap();
             txtMaNCC.ReadOnly = false;
         }
 
-        private void btnFind_Click(object sender, EventArgs e)
+        private void btnFind_Click_1(object sender, EventArgs e)
         {
             if (busNCC.checkcbFind(cbFind.Text))
             {
@@ -164,35 +171,39 @@ namespace QuanLyBangKeo
                 MessageBox.Show("Giá trị loại cần tìm không hợp lệ");
             }
         }
-        private void ResetValue()
+
+        private void dgvNCC_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            txtMaNCC.Text = "";
-            txtTenNCC.Text = "";
-            txtSDT_NCC.Text = "";
-            txtFind.Text = "";
-            cbFind.SelectedIndex = -1;
-            txtDiaChiNCC.Text = "";
+            if (e.ColumnIndex == dgvNCC.Columns["DeleteColumn"].Index && e.RowIndex >= 0)
+            {
+                // Hiện hộp thoại xác nhận
+                DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn xóa hàng này không?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if (result == DialogResult.Yes)
+                {
+                    DataGridViewRow row = dgvNCC.SelectedRows[0];
+                    string maNCC = row.Cells[1].Value.ToString();
+                    if (busNCC.deleteNhaCungCap(maNCC))
+                    {
+                        MessageBox.Show("Xóa thành công");
+                        dgvNCC.DataSource = busNCC.getNhaCungCap(); // refresh datagridview
+                        DTO_NhatKyHoatDong nkhd = new DTO_NhatKyHoatDong(MaNV, DateTime.Now, "Xóa nhà cung cấp", "Xóa nhà cung cấp mã " + maNCC);
+                        busnkhd.AddNKHD(nkhd);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Xóa ko thành công");
+                    }
+                }
+            }
         }
 
-        private void dgvNCC_SelectionChanged(object sender, EventArgs e)
+        private void txtSDT_NCC_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (dgvNCC.SelectedRows.Count > 0)
+            if (!char.IsDigit(e.KeyChar))
             {
-                // Lấy dòng đầu tiên được chọn
-                DataGridViewRow selectedRow = dgvNCC.SelectedRows[0];
-
-                // Lấy dữ liệu từ các ô cột của dòng được chọn
-                string maNCC = selectedRow.Cells["MaNCC"].Value.ToString();
-                string tenNCC = selectedRow.Cells["TenNCC"].Value.ToString();
-                string diaChi = selectedRow.Cells["DiaChiNCC"].Value.ToString();
-                string soDienThoai = selectedRow.Cells["SDTNCC"].Value.ToString();
-
-                // Gán dữ liệu lên các TextBox tương ứng
-                txtMaNCC.Text = maNCC;
-                txtMaNCC.ReadOnly = true;
-                txtTenNCC.Text = tenNCC;
-                txtDiaChiNCC.Text = diaChi;
-                txtSDT_NCC.Text = soDienThoai;
+                e.Handled = true;
+                txtSDT_NCC.Focus();
             }
         }
     }

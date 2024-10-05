@@ -23,35 +23,62 @@ namespace QuanLyBangKeo
 
         private void DangNhap_Load(object sender, EventArgs e)
         {
-            cbchucvu.Text = cbchucvu.Items[1].ToString();
+            guna2PictureBox1.BringToFront();
+        }
+
+        private void guna2PictureBox1_Click(object sender, EventArgs e)
+        {
+            if (txtPass.PasswordChar == '*')
+            {
+                guna2PictureBox2.BringToFront();
+                txtPass.PasswordChar = '\0';
+            }
+        }
+
+        private void guna2PictureBox2_Click(object sender, EventArgs e)
+        {
+            if(txtPass.PasswordChar=='\0')
+            {
+                guna2PictureBox1.BringToFront();
+                txtPass.PasswordChar = '*';
+            }
         }
 
         private void btnDangNhap_Click(object sender, EventArgs e)
         {
-            if (busdangnhap.KiemTraTonTaiChucVuNV(cbchucvu.Text))
+            if (busdangnhap.KiemTraTaiKhoan(txtUser.Text))
             {
-                if (busdangnhap.KiemTraTonTaiNV(cbchucvu.Text, txtpass.Text))
+                if (busdangnhap.KiemTraTonTaiNV(txtUser.Text, txtPass.Text))
                 {
-                    if(cbchucvu.Text=="Quản lý")
+                    var result = busdangnhap.LayTenVaQuyen(txtUser.Text, txtPass.Text);
+                    if (result.tenQuyen == "Quản lý")
                     {
-                        TrangChu trangchu = new TrangChu(true);
+                        TrangChu trangchu = new TrangChu(true,result.HoTenNV,result.tenQuyen,result.hinhanh,result.MaNV);
                         trangchu.ShowDialog();
                     }
-                    else if (cbchucvu.Text == "Nhân viên")
+                    else if (result.tenQuyen == "Nhân viên bán hàng")
                     {
-                        TrangChu trangchu = new TrangChu(false);
+                        TrangChu trangchu = new TrangChu(false,result.HoTenNV,result.tenQuyen,result.hinhanh,result.MaNV);
                         trangchu.ShowDialog();
                     }
                     this.Close();
                 }
                 else
                 {
-                    MessageBox.Show("Tên tài khoản hoặc mật khẩu không chính xác");
+                    MessageBox.Show("Mật khẩu không chính xác");
                 }
             }
             else
             {
-                MessageBox.Show("Không tồn tại tài khoản vừa nhập");
+                MessageBox.Show("Tài khoản không đúng!!!!");
+            }
+        }
+
+        private void txtPass_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                btnDangNhap.PerformClick();
             }
         }
     }

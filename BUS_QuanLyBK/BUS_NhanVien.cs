@@ -45,15 +45,15 @@ namespace BUS_QuanLyBK
         public bool IsDateBeforeToday(DateTime selectedDate)
         {
             DateTime today = DateTime.Today;
-            return selectedDate < today;
+            return selectedDate < today || selectedDate==today;
         }
         public bool IsComboBoxValueValid(string cbChucVu,string cbGioiTinh)
         {
-            if (cbChucVu != "Quản lý" && cbChucVu != "Nhân viên")
+            if (cbChucVu != "QL        " && cbChucVu != "NVBH      " && cbChucVu !="NVK       ")
             {
                 return false;
             }
-            if (cbGioiTinh != "Nam" && cbGioiTinh != "Nữ")
+            if (cbGioiTinh != "Nam  " && cbGioiTinh != "Nữ   ")
             {
                 return false;
             }

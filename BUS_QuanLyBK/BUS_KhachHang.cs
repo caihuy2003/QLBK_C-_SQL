@@ -46,12 +46,20 @@ namespace BUS_QuanLyBK
         }
         public bool checkcbFind(string cbFind)
         {
-            if (cbFind != "Mã khách hàng" && cbFind != "Tên khách hàng")
+            if (cbFind != "Mã khách hàng" && cbFind != "Tên khách hàng" && cbFind != "Mã loại khách hàng")
             {
                 return false;
             }
 
             return true;
+        }
+        public List<string> GetMaLKH()
+        {
+            return dalKhachHang.GetMaLKH();
+        }
+        public void CapNhatNoKhachHang(string MaKH,int tienno)
+        {
+            dalKhachHang.CapNhatNoKhachHang(MaKH,tienno);
         }
     }
 }

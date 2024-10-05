@@ -10,7 +10,6 @@ namespace DTO_QuanLyBK
     {
         private string _MA_LSP;
         private string _TEN_LSP;
-        private string _MOTA;
         public string MA_LSP
         {
             get { return _MA_LSP; }
@@ -21,17 +20,11 @@ namespace DTO_QuanLyBK
             get { return _TEN_LSP; }
             set { _TEN_LSP = value; }
         }
-        public string MOTA
-        {
-            get { return _MOTA; }
-            set { _MOTA = value; }
-        }
         public DTO_LoaiSanPham() { }
-        public DTO_LoaiSanPham(string id, string name, string mota)
+        public DTO_LoaiSanPham(string id, string name)
         {
             this.MA_LSP = id;
             this.TEN_LSP = name;
-            this.MOTA = mota;
         }
     }
 }

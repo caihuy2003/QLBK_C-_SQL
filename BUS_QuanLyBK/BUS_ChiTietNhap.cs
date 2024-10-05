@@ -29,13 +29,13 @@ namespace BUS_QuanLyBK
         {
             return dalchitietnhap.XoaChiTietHDNTamThoi(maHDN,dataSet);
         }
-        public bool deleteChiTietNhap(string MaHDN)
+        public bool deleteChiTietNhap(string MaHDN,string MaSP)
         {
-            return dalchitietnhap.deleteChiTietNhap(MaHDN);
+            return dalchitietnhap.deleteChiTietNhap(MaHDN,MaSP);
         }
-        public List<string> GetMaSanPham()
+        public List<string> GetMaSanPham(string mancc)
         {
-            return dalchitietnhap.GetMaSP();
+            return dalchitietnhap.GetMaSP(mancc);
         }
         public List<string> GetMaNCC()
         {
@@ -96,6 +96,20 @@ namespace BUS_QuanLyBK
         public DataSet GetHoaDonNhapHangByMaHDN(string MaHDN, string MaNV)
         {
             return dalchitietnhap.GetHoaDonNhapHangByMaHDN(MaHDN, MaNV);
+        }
+        public void CapNhatSoLuong(DataSet ds)
+        {
+            foreach (DataRow row in ds.Tables["ChiTietNhap1"].Rows)
+            {
+                string MaSP = row["MaSP"].ToString();
+                int soluong = Convert.ToInt32(row["SLNhap"]);
+
+                dalchitietnhap.CapNhatSoLuong(MaSP, soluong);
+            }
+        }
+        public bool XoaChiTietNhap(string MaHDN, string MaSP) 
+        {
+            return dalchitietnhap.XoaChiTietNhap(MaHDN, MaSP);
         }
     }
 }

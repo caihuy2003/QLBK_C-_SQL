@@ -65,5 +65,25 @@ namespace BUS_QuanLyBK
 
             return true;
         }
+        public bool CapNhatTrangThai(string maHoaDon, bool trangThaiDaThanhToan)
+        {
+            bool trangThaiHienTai = dalhoadonban.LayTrangThaiHoaDon(maHoaDon);
+
+            if (trangThaiHienTai  && !trangThaiDaThanhToan)
+            {
+                return false;
+            }
+
+            dalhoadonban.CapNhatTrangThaiHoaDon(maHoaDon, trangThaiDaThanhToan);
+            return true;
+        }
+        public void CapNhatNoKhachHang(string maKH, int soTien)
+        {
+            dalhoadonban.CapNhatNoKhachHang(maKH, soTien);
+        }
+        public bool LayHoaDonHienTai(String maHDB)
+        {
+            return dalhoadonban.LayTrangThaiHoaDon(maHDB);
+        }
     }
 }

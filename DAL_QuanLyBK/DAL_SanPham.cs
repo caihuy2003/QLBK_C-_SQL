@@ -18,7 +18,7 @@ namespace DAL_QuanLyBK
         
         public DataTable getSanPham()
         {
-            SqlDataAdapter da = new SqlDataAdapter("SELECT MaSP,MaNCC,MaLSP,TenSP,SoLuongSP,DVT,DonGiaNhap,DonGiaBan,HinhAnh FROM dbo.SANPHAM", _conn);
+            SqlDataAdapter da = new SqlDataAdapter("SELECT MaSP,MaNCC,MaLSP,TenSP,DonGiaNhap,DonGiaBan,DVT,TonDau as 'Tồn đầu',Nhap,Xuat,TonCuoi as 'Tồn cuối',BichTrenThung as 'Bịch/Thùng',GhiChu as 'Ghi chú',HinhAnh FROM dbo.SANPHAM", _conn);
             DataTable dtsanpham = new DataTable();
             da.Fill(dtsanpham);
             return dtsanpham;
@@ -28,7 +28,7 @@ namespace DAL_QuanLyBK
             try
             {
                 _conn.Open();
-                string SQL = string.Format("INSERT INTO SANPHAM(MaSP,MaNCC,MaLSP,TenSP,SoLuongSP,DVT,DonGiaNhap,DonGiaBan,HinhAnh) VALUES ('{0}','{1}','{2}',N'{3}',{4},N'{5}',{6},{7},@HinhAnh)", sp.MA_SP,sp.MA_NCC,sp.MA_LSP, sp.TEN_SP,sp.SOLUONG_SP,sp.DVT,sp.DONGIANHAP,sp.DONGIABAN);
+                string SQL = string.Format("INSERT INTO SANPHAM(MaSP,MaNCC,MaLSP,TenSP,DonGiaNhap,DonGiaBan,DVT,TonDau,Nhap,Xuat,TonCuoi,BichTrenThung,GhiChu,HinhAnh) VALUES ('{0}','{1}','{2}',N'{3}',{4},{5},N'{6}',{7},0,0,{7},{8},N'{9}',@HinhAnh)", sp.MA_SP,sp.MA_NCC,sp.MA_LSP, sp.TEN_SP,sp.DONGIANHAP,sp.DONGIABAN, sp.DVT,sp.TONCUOI,sp.BICHTRENTHUNG,sp.GHICHU);
                 SqlCommand cmd = new SqlCommand(SQL, _conn);
                 cmd.Parameters.AddWithValue("@HinhAnh", sp.HINHANH);
                 if (cmd.ExecuteNonQuery() > 0)
@@ -51,8 +51,8 @@ namespace DAL_QuanLyBK
             try
             {
                 _conn.Open();
-                string SQL = string.Format("UPDATE SANPHAM SET MaNCC='{0}',MaLSP='{1}', TenSP=N'{2}',SoLuongSP={3},DVT=N'{4}',DonGiaNhap={5},DonGiaBan={6},HinhAnh= @HinhAnh where MaSP='{7}'",
-                    sp.MA_NCC,sp.MA_LSP,sp.TEN_SP,sp.SOLUONG_SP,sp.DVT,sp.DONGIANHAP,sp.DONGIABAN, sp.MA_SP);
+                string SQL = string.Format("UPDATE SANPHAM SET MaNCC='{0}',MaLSP='{1}', TenSP=N'{2}',TonCuoi={3},DVT=N'{4}',DonGiaNhap={5},DonGiaBan={6},BichTrenThung={8},GhiChu=N'{9}',HinhAnh= @HinhAnh where MaSP='{7}'",
+                    sp.MA_NCC,sp.MA_LSP,sp.TEN_SP,sp.TONCUOI,sp.DVT,sp.DONGIANHAP,sp.DONGIABAN, sp.MA_SP,sp.BICHTRENTHUNG,sp.GHICHU);
                 SqlCommand cmd = new SqlCommand(SQL, _conn);
                 cmd.Parameters.AddWithValue("@HinhAnh", sp.HINHANH);
                 if (cmd.ExecuteNonQuery() > 0)
@@ -97,10 +97,20 @@ namespace DAL_QuanLyBK
             try
             {
                 _conn.Open();
-                string SQL = string.Format("SELECT MaSP,MaNCC,MaLSP,TenSP,SoLuongSP,DVT,DonGiaNhap,DonGiaBan,HinhAnh FROM SANPHAM WHERE");
+                string SQL = string.Format("Select MaSP,MaNCC,MaLSP,TenSP,DonGiaNhap,DonGiaBan,DVT,TonDau as 'Tồn đầu',Nhap,Xuat,TonCuoi as 'Tồn cuối',BichTrenThung as 'Bịch/Thùng',GhiChu as 'Ghi chú',HinhAnh FROM SANPHAM WHERE");
                 if (cbFind == "Mã sản phẩm")
                 {
                     SQL += string.Format(" MaSP like N'%" + txtFind.Trim() + "%'");
+                }
+                else if (cbFind == "Mã nhà cung cấp")
+                {
+                    SQL += string.Format(" MaNCC like N'%" + txtFind.Trim() + "%'");
+
+                }
+                else if (cbFind == "Mã loại sản phẩm")
+                {
+                    SQL += string.Format(" MaLSP like N'%" + txtFind.Trim() + "%'");
+
                 }
                 else if (cbFind == "Tên sản phẩm")
                 {

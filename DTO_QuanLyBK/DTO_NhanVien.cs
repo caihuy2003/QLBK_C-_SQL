@@ -18,6 +18,9 @@ namespace DTO_QuanLyBK
         private string _MATKHAU;
         private byte[] _HINHANH;
         private DateTime _NGAYSINH;
+        private int _LUONG;
+        private string _TAIKHOAN;
+        private string _HO_NV;
         public string MA_NV
         {
             get { return _MA_NV; }
@@ -68,8 +71,23 @@ namespace DTO_QuanLyBK
             get { return _NGAYSINH; }
             set { _NGAYSINH = value; }
         }
+        public string TAIKHOAN
+        {
+            get { return _TAIKHOAN; }
+            set { _TAIKHOAN = value; }
+        }
+        public string HONV
+        {
+            get { return _HO_NV; }
+            set { _HO_NV = value; }
+        }
+        public int LUONG
+        {
+            get { return _LUONG; }
+            set { _LUONG = value; }
+        }
         public DTO_NhanVien() { }
-        public DTO_NhanVien(string id, string name,DateTime ngaysinh, string address, string phone,string position,DateTime StartDay, string sex,string password, byte[] image)
+        public DTO_NhanVien(string id, string ho,string name,DateTime ngaysinh, string address, string phone,string position,DateTime StartDay, string sex,string tk,string password, byte[] image,int luong)
         {
             this.MA_NV = id;
             this.TEN_NV = name;
@@ -81,6 +99,9 @@ namespace DTO_QuanLyBK
             this.GIOITINH_NV = sex;
             this.MATKHAU = password;
             this.HINHANH = image;
+            this.LUONG = luong;
+            this.HONV = ho;
+            this.TAIKHOAN = tk;
         }
     }
 }

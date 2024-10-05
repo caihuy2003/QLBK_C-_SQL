@@ -19,7 +19,7 @@ namespace DAL_QuanLyBK
             {
                 _conn.Open();
 
-                string SQL = "SELECT MaHDN, MaSP, TenSP, SLNhap, GiaNhap, ThanhTien FROM CHITIETNHAP WHERE MaHDN = @MaHDN";
+                string SQL = "SELECT a.MaHDN,a.MaSP, b.TenSP, b.DVT,a.SLNhap,b.DonGiaNhap, a.ThanhTien, a.GhiChu FROM dbo.ChiTietNhap a join dbo.SANPHAM b on a.MaSP=b.MaSP where MaHDN=@MaHDN";
 
                 SqlCommand cmd = new SqlCommand(SQL, _conn);
                 cmd.Parameters.AddWithValue("@MaHDN", MaHDN);
@@ -43,20 +43,38 @@ namespace DAL_QuanLyBK
         {
             try
             {
+                _conn.Open();
+                string query = "SELECT TenSP, DVT,DonGiaNhap FROM SANPHAM WHERE MaSP = @MaSP";
+                SqlCommand cmd = new SqlCommand(query, _conn);
+                cmd.Parameters.AddWithValue("@MaSP", ct_hdn.MA_SP);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    ct_hdn.TENSP = reader["TenSP"].ToString();
+                    ct_hdn.DVT = reader["DVT"].ToString();
+                    ct_hdn.DONGIANHAP = Convert.ToInt32(reader["DonGiaNhap"]);
+                }
                 // Thêm dòng vào DataTable tạm thời
-                DataRow newRow = dataSet.Tables["ChiTietNhap"].NewRow();
+                DataRow newRow = dataSet.Tables["ChiTietNhap1"].NewRow();
                 newRow["MaHDN"] = ct_hdn.MA_HDN;
                 newRow["MaSP"] = ct_hdn.MA_SP;
-                newRow["TenSP"] = ct_hdn.TEN_SP;
+                newRow["TenSP"]=ct_hdn.TENSP;
+                newRow["DVT"] = ct_hdn.DVT;
                 newRow["SLNhap"] = ct_hdn.SLNHAP;
-                newRow["GiaNhap"] = ct_hdn.GIANHAP;
+                newRow["DonGiaNhap"] = ct_hdn.DONGIANHAP;
                 newRow["ThanhTien"] = ct_hdn.THANHTIEN;
-                dataSet.Tables["ChiTietNhap"].Rows.Add(newRow);
+                newRow["GhiChu"] = ct_hdn.GHICHU;
+                dataSet.Tables["ChiTietNhap1"].Rows.Add(newRow);
                 return true;
             }
             catch (Exception ex)
             {
                 throw ex;
+            }
+            finally
+            {
+                _conn.Close ();
             }
         }
         public bool SuaChiTietHDNTamThoi(DTO_ChiTietNhap ct_hdn, DataSet dataSet)
@@ -64,14 +82,13 @@ namespace DAL_QuanLyBK
             try
             {
                 // Tìm dòng cần sửa trong DataTable tạm thời
-                DataRow[] rows = dataSet.Tables["ChiTietNhap"].Select($"MaSP = '{ct_hdn.MA_SP}'");
+                DataRow[] rows = dataSet.Tables["ChiTietNhap1"].Select($"MaSP = '{ct_hdn.MA_SP}'");
                 if (rows.Length > 0)
                 {
                     rows[0]["MaHDN"] = ct_hdn.MA_HDN;
-                    rows[0]["TenSP"] = ct_hdn.TEN_SP;
                     rows[0]["SLNhap"] = ct_hdn.SLNHAP;
-                    rows[0]["GiaNhap"] = ct_hdn.GIANHAP;
                     rows[0]["ThanhTien"] = ct_hdn.THANHTIEN;
+                    rows[0]["GhiChu"]=ct_hdn.GHICHU;
                     return true;
                 }
                 return false; // Không tìm thấy dòng cần sửa
@@ -86,7 +103,7 @@ namespace DAL_QuanLyBK
             try
             {
                 // Tìm dòng cần xóa trong DataTable tạm thời
-                DataRow[] rows = dataSet.Tables["ChiTietNhap"].Select($"MaHDN = '{maHDN}'");
+                DataRow[] rows = dataSet.Tables["ChiTietNhap1"].Select($"MaHDN = '{maHDN}'");
                 if (rows.Length > 0)
                 {
                     rows[0].Delete();
@@ -101,12 +118,12 @@ namespace DAL_QuanLyBK
         }
         
         
-        public bool deleteChiTietNhap(string MaHDN)
+        public bool deleteChiTietNhap(string MaHDN,string MaSP)
         {
             try
             {
                 _conn.Open();
-                string SQL = string.Format("DELETE FROM CHITIETNHAP WHERE MaHDN='{0}'",MaHDN);
+                string SQL = string.Format("DELETE FROM CHITIETNHAP WHERE MaHDN='{0}' AND MaSP='{1}'",MaHDN,MaSP);
                 SqlCommand cmd = new SqlCommand(SQL, _conn);
                 if (cmd.ExecuteNonQuery() > 0)
                 {
@@ -174,14 +191,15 @@ namespace DAL_QuanLyBK
                 _conn.Close();
             }
         }
-        public List<string> GetMaSP()
+        public List<string> GetMaSP(string mancc)
         {
             try
             {
                 _conn.Open();
                 List<string> maSP_List = new List<string>();
-                string SQL = string.Format("SELECT MaSP FROM SANPHAM");
+                string SQL = string.Format("SELECT MaSP FROM SANPHAM where MaNCC=@MaNCC");
                 SqlCommand cmd = new SqlCommand(SQL, _conn);
+                cmd.Parameters.AddWithValue("@MaNCC", mancc);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
@@ -390,6 +408,53 @@ namespace DAL_QuanLyBK
             da.Fill(ds);
             _conn.Close();
             return ds;
+        }
+        public void CapNhatSoLuong(string MaSP, int soluong)
+        {
+            try
+            {
+                _conn.Open();
+                string SQL = "UPDATE SANPHAM SET TonCuoi = TonCuoi + @SoLuong,Nhap=Nhap+@SoLuong WHERE MaSP = @MaSanPham";
+
+                SqlCommand cmd = new SqlCommand(SQL, _conn);
+                cmd.Parameters.AddWithValue("@MaSanPham", MaSP);
+                cmd.Parameters.AddWithValue("@SoLuong", soluong);
+                int rowsAffected = cmd.ExecuteNonQuery();
+                if (rowsAffected == 0)
+                {
+                    throw new Exception("Không tìm thấy sản phẩm cần cập nhật.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                _conn.Close();
+            }
+        }
+        public bool XoaChiTietNhap(string MaHDN,string MaSP)
+        {
+            try
+            {
+                _conn.Open();
+                SqlCommand cmd = new SqlCommand("XoaChiTietNhap", _conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@MaHDN", MaHDN);
+                cmd.Parameters.AddWithValue("@MaSP", MaSP);
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                _conn.Close();
+            }
         }
     }
 }

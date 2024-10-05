@@ -14,7 +14,7 @@ namespace DAL_QuanLyBK
     {
         public DataTable getNhaCungCap()
         {
-            SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM dbo.NHACUNGCAP", _conn);
+            SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM dbo.NHACUNGCAP order by MaNCC", _conn);
             DataTable dtNhaCungCap = new DataTable();
             da.Fill(dtNhaCungCap);
             return dtNhaCungCap;
@@ -24,7 +24,7 @@ namespace DAL_QuanLyBK
             try
             {
                 _conn.Open();
-                string SQL = string.Format("INSERT INTO NHACUNGCAP(MaNCC,TenNCC,DiaChiNCC,SDTNCC) VALUES ('{0}',N'{1}',N'{2}','{3}')", ncc.MA_NCC, ncc.TEN_NCC, ncc.DIACHI_NCC, ncc.SDT_NCC);
+                string SQL = string.Format("INSERT INTO NHACUNGCAP(MaNCC,TenNCC,DiaChiNCC,SDTNCC,GhiChu) VALUES ('{0}',N'{1}',N'{2}','{3}',N'{4}')", ncc.MA_NCC, ncc.TEN_NCC, ncc.DIACHI_NCC, ncc.SDT_NCC,ncc.GHICHU);
                 SqlCommand cmd = new SqlCommand(SQL, _conn);
                 if (cmd.ExecuteNonQuery() > 0)
                 {
@@ -46,7 +46,7 @@ namespace DAL_QuanLyBK
             try
             {
                 _conn.Open();
-                string SQL = string.Format("UPDATE NHACUNGCAP SET TenNCC=N'{0}' ,DiaChiNCC=N'{1}',SDTNCC='{2}' where MaNCC='{3}'", ncc.TEN_NCC, ncc.DIACHI_NCC, ncc.SDT_NCC, ncc.MA_NCC);
+                string SQL = string.Format("UPDATE NHACUNGCAP SET TenNCC=N'{0}' ,DiaChiNCC=N'{1}',SDTNCC='{2}',GhiChu=N'{4}' where MaNCC='{3}'", ncc.TEN_NCC, ncc.DIACHI_NCC, ncc.SDT_NCC, ncc.MA_NCC,ncc.GHICHU);
                 SqlCommand cmd = new SqlCommand(SQL, _conn);
                 if (cmd.ExecuteNonQuery() > 0)
                 {
@@ -68,7 +68,7 @@ namespace DAL_QuanLyBK
             try
             {
                 _conn.Open();
-                string SQL = string.Format("DELETE FROM NHACUNGCAP WHERE MaNCC='{0}'", MaNCC);
+                string SQL = string.Format("  Delete from SANPHAM where MaNCC='{0}'  GO  Delete from ChiTietNhap where MaSP in (Select MaSP from SANPHAM where MaNCC='{0}')  GO DELETE FROM NHACUNGCAP WHERE MaNCC='{0}'", MaNCC);
                 SqlCommand cmd = new SqlCommand(SQL, _conn);
                 if (cmd.ExecuteNonQuery() > 0)
                 {

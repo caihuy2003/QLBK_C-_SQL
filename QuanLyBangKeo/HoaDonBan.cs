@@ -17,33 +17,36 @@ namespace QuanLyBangKeo
     {
         BUS_HoaDonBan bushdb=new BUS_HoaDonBan();
         BUS_ChiTietHDB busct_hdb=new BUS_ChiTietHDB();
-        public HoaDonBan()
+        BUS_NhatKyHoatDong busnkhd=new BUS_NhatKyHoatDong();
+        private string MaNV;
+        public HoaDonBan(string MaNV)
         {
             InitializeComponent();
+            this.MaNV = MaNV;
         }
 
         private void HoaDonBan_Load(object sender, EventArgs e)
         {
             dgvhdb.DataSource = bushdb.getHoaDonBan();
-            cbMaNV.DataSource = bushdb.GetMaNV();
             cbMaKH.DataSource = bushdb.GetMaKH();
-            int totalWidth = dgvhdb.Width - dgvhdb.RowHeadersWidth;
-            int columnCount = dgvhdb.Columns.Count;
-            int averageWidth = totalWidth / columnCount;
+            dgvhdb.RowTemplate.Height = 30;
+            dgvhdb.RowsDefaultCellStyle.BackColor = Color.DarkSlateBlue;
+            dgvhdb.AlternatingRowsDefaultCellStyle.BackColor = Color.SlateBlue;
 
-            // Gán kích thước trung bình cho mỗi cột
-            foreach (DataGridViewColumn column in dgvhdb.Columns)
-            {
-                column.Width = averageWidth;
-            }
-        }
+            dgvhdb.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
 
-        private void cbMaNV_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            string manv = cbMaNV.SelectedItem.ToString();
-            string[] thongTinNV = bushdb.LayThongTinNV(manv); 
-
-            txtTenNV.Text = thongTinNV[0];
+            // Tự động điều chỉnh kích thước cột cuối cùng để vừa với chiều rộng DataGridView
+            dgvhdb.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvhdb.RowTemplate.Height = 50;
+            Image trashIcon = Properties.Resources.icons8_delete_50;
+            Image resizedIcon = new Bitmap(trashIcon, new Size(20, 20));
+            DataGridViewImageColumn imgColumn = new DataGridViewImageColumn();
+            imgColumn.Name = "DeleteColumn";
+            imgColumn.HeaderText = "";
+            imgColumn.Image = resizedIcon;
+            imgColumn.Width = 10;
+            //imgColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvhdb.Columns.Add(imgColumn);
         }
 
         private void cbMaKH_SelectedIndexChanged(object sender, EventArgs e)
@@ -54,14 +57,36 @@ namespace QuanLyBangKeo
             txtTenKH.Text = thongTinKH[0];
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void dgvhdb_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //ReportHDB rphdb = new ReportHDB();
+            //rphdb.Show();
+            if (dgvhdb.SelectedRows.Count > 0)
+            {
+                string maHoaDon = dgvhdb.SelectedRows[0].Cells["MaHDB"].Value.ToString();
+                DateTime ngay = (DateTime)dgvhdb.SelectedRows[0].Cells["NgayXuatHDB"].Value;
+                int tongtien = (int)dgvhdb.SelectedRows[0].Cells["TongTienBan"].Value;
+                bool daThanhToan = (bool)dgvhdb.SelectedRows[0].Cells["DaThanhToan"].Value;
+                DanhSachCT_HDB ds = new DanhSachCT_HDB();
+                ds.SetValue(maHoaDon, MaNV, cbMaKH.Text, ngay, tongtien,daThanhToan);
+                ds.ShowDialog();
+                DTO_NhatKyHoatDong nkhd = new DTO_NhatKyHoatDong(MaNV, DateTime.Now, "Xem chi tiết hóa đơn", "Xem chi tiết hóa đơn bán mã " + maHoaDon);
+                busnkhd.AddNKHD(nkhd);
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng chọn một hóa đơn để xem.");
+            }
+        }
+
+        private void btnAdd_Click_1(object sender, EventArgs e)
         {
             int sohoadon = dgvhdb.RowCount;
             string maHoaDon = "";
             bool found = true;
             while (found)
             {
-                maHoaDon = "HDB" + sohoadon.ToString("D3") + "    ";
+                maHoaDon = "HDB" + sohoadon.ToString("D4") + "   ";
                 found = false;
 
                 // Kiểm tra xem mã hóa đơn có tồn tại trong datagridview hay không
@@ -78,14 +103,17 @@ namespace QuanLyBangKeo
             if (!found /*&& cbMaKH.Text !="" && cbMaNV.Text !=""*/)
             {
                 DateTime dt = DateTime.Now;
-                DTO_HoaDonBan hdb = new DTO_HoaDonBan(maHoaDon, cbMaNV.Text,cbMaKH.Text, dt, 0);
+                DTO_HoaDonBan hdb = new DTO_HoaDonBan(maHoaDon,MaNV, cbMaKH.Text, dt, 0, false);
                 if (bushdb.addHDB(hdb))
                 {
                     MessageBox.Show("Thêm thành công");
                     dgvhdb.DataSource = bushdb.getHoaDonBan();
+                    DTO_NhatKyHoatDong nkhd = new DTO_NhatKyHoatDong(MaNV, DateTime.Now, "Tạo hóa đơn mới", "Tạo hóa đơn bán mới với mã " + maHoaDon);
+                    busnkhd.AddNKHD(nkhd);
                     ChiTietHDB chiTietHDB = new ChiTietHDB();
-                    chiTietHDB.SetMaHoaDonValue(maHoaDon, cbMaNV.Text,cbMaKH.Text);
+                    chiTietHDB.SetMaHoaDonValue(maHoaDon, MaNV, cbMaKH.Text);
                     chiTietHDB.ShowDialog();
+                    this.Close();
                 }
                 else
                 {
@@ -98,57 +126,42 @@ namespace QuanLyBangKeo
             }
         }
 
-        private void btnSee_Click(object sender, EventArgs e)
+        private void dgvhdb_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            ReportHDB rphdb = new ReportHDB();
-            rphdb.Show();
-            if (dgvhdb.SelectedRows.Count > 0)
+            if (e.ColumnIndex == dgvhdb.Columns["DeleteColumn"].Index && e.RowIndex >= 0)
             {
-                string maHoaDon = dgvhdb.SelectedRows[0].Cells[0].Value.ToString();
-                DateTime ngay = (DateTime)dgvhdb.SelectedRows[0].Cells[3].Value;
-                int tongtien = (int)dgvhdb.SelectedRows[0].Cells[4].Value;
-                DanhSachCT_HDB ds = new DanhSachCT_HDB();
-                ds.SetValue(maHoaDon, cbMaNV.Text, cbMaKH.Text,ngay,tongtien);
-                ds.ShowDialog();
-            }
-            else
-            {
-                MessageBox.Show("Vui lòng chọn một hóa đơn để xem.");
-            }
-        }
+                // Hiện hộp thoại xác nhận
+                DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn xóa hàng này không?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
-        private void btnDelete_Click(object sender, EventArgs e)
-        {
-            if (dgvhdb.SelectedRows.Count > 0)
-            {
-                // Lấy row hiện tại
-                DataGridViewRow row = dgvhdb.SelectedRows[0];
-                string maHoaDon = dgvhdb.SelectedRows[0].Cells["MaHDB"].Value.ToString();
-                // Xóa
-                busct_hdb.deleteChiTietHDB(maHoaDon);
-                if (bushdb.deleteHDB(maHoaDon))
+                if (result == DialogResult.Yes)
                 {
-                    MessageBox.Show("Xóa thành công");
-                    dgvhdb.DataSource = bushdb.getHoaDonBan();
-                }
-                else
-                {
-                    MessageBox.Show("Xóa ko thành công");
+                    DataGridViewRow row = dgvhdb.SelectedRows[0];
+                    string mahdb = row.Cells[1].Value.ToString();
+                    if (bushdb.deleteHDB(mahdb))
+                    {
+                        MessageBox.Show("Xóa thành công");
+                        dgvhdb.DataSource = bushdb.getHoaDonBan(); // refresh datagridview
+                        DTO_NhatKyHoatDong nkhd = new DTO_NhatKyHoatDong(MaNV, DateTime.Now, "Xóa hóa đơn bán", "Xóa hóa đơn bán mã " + mahdb);
+                        busnkhd.AddNKHD(nkhd);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Xóa ko thành công");
+                    }
                 }
             }
-            else
-            {
-                MessageBox.Show("Hãy chọn thành viên muốn xóa");
-            }
+            
         }
 
-        private void btnExcel_Click(object sender, EventArgs e)
+        private void btnExcel_Click_1(object sender, EventArgs e)
         {
             Funtion.ToExcel(dgvhdb, @"D:\LapTrinhCSDL\QLBK", "_QL_DanhSachHoaDon", " hoa don ban");
             MessageBox.Show("Xuất file Excel thành công");
+            DTO_NhatKyHoatDong nkhd = new DTO_NhatKyHoatDong(MaNV, DateTime.Now, "Xuất file excel", "Xuất file hóa đơn bán");
+            busnkhd.AddNKHD(nkhd);
         }
 
-        private void btnFind_Click(object sender, EventArgs e)
+        private void btnFind_Click_1(object sender, EventArgs e)
         {
             if (bushdb.checkcbFind(cbFind.Text))
             {
@@ -166,6 +179,69 @@ namespace QuanLyBangKeo
             else
             {
                 MessageBox.Show("Giá trị loại cần tìm không hợp lệ");
+            }
+        }
+
+        private void btnLocTT_Click(object sender, EventArgs e)
+        {
+            bool isPaid = checkbox1.Checked; // Kiểm tra giá trị của checkbox hoặc điều kiện trạng thái
+            (dgvhdb.DataSource as DataTable).DefaultView.RowFilter = $"DaThanhToan = {isPaid}";
+        }
+
+        private void btnLocNgay_Click(object sender, EventArgs e)
+        {
+            DateTime selectedDate = dtLoc.Value.Date;
+            (dgvhdb.DataSource as DataTable).DefaultView.RowFilter = $"NgayXuatHDB = #{selectedDate:MM/dd/yyyy}#";
+        }
+
+        private void btnBoLoc_Click(object sender, EventArgs e)
+        {
+            dgvhdb.DataSource = bushdb.getHoaDonBan();
+        }
+
+        private void dgvhdb_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == dgvhdb.Columns["DaThanhToan"].Index && e.RowIndex >= 0)
+            {
+                DataGridViewCheckBoxCell checkBoxCell = (DataGridViewCheckBoxCell)dgvhdb.Rows[e.RowIndex].Cells["DaThanhToan"];
+
+                string maHoaDon = dgvhdb.SelectedRows[0].Cells["MaHDB"].Value.ToString();
+                bool isChecked = (bool)checkBoxCell.EditedFormattedValue;
+                int tongTien = Convert.ToInt32(dgvhdb.Rows[0].Cells["TongTienBan"].Value);
+                string maKH = dgvhdb.SelectedRows[0].Cells["MaKH"].Value.ToString();
+
+                bool trangThaiHienTai = bushdb.LayHoaDonHienTai(maHoaDon);
+
+                if (!trangThaiHienTai && isChecked) // Chuyển từ chưa thanh toán sang đã thanh toán
+                {
+                    bushdb.CapNhatTrangThai(maHoaDon, true);
+                    bushdb.CapNhatNoKhachHang(maKH, -tongTien);
+                    checkBoxCell.Value = true;
+                    DTO_NhatKyHoatDong nkhd = new DTO_NhatKyHoatDong(MaNV, DateTime.Now, "Thanh toán", "Xác nhận khách hàng mã " + maKH+" đã thanh toán rồi");
+                    busnkhd.AddNKHD(nkhd);
+                }
+                else if (trangThaiHienTai && !isChecked) // Cố gắng chuyển từ đã thanh toán sang chưa thanh toán
+                {
+                    MessageBox.Show("Hóa đơn đã thanh toán, không thể chuyển lại sang ghi nợ.");
+                    checkBoxCell.Value = true;  // Giữ nguyên trạng thái đã thanh toán
+                }
+            }
+        }
+
+        private void dgvhdb_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            // Kiểm tra chỉ số hàng và cột phải hợp lệ
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                if (dgvhdb.Columns[e.ColumnIndex].Name == "DaThanhToan")
+                {
+                    bool isPaid = Convert.ToBoolean(dgvhdb.Rows[e.RowIndex].Cells["DaThanhToan"].Value);
+
+                    if (isPaid)
+                    {
+                        dgvhdb.Rows[e.RowIndex].Cells["DaThanhToan"].ReadOnly = true; // Không cho phép chỉnh sửa
+                    }
+                }
             }
         }
     }

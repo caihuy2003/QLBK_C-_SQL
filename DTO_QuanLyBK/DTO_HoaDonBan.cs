@@ -13,6 +13,7 @@ namespace DTO_QuanLyBK
         private string _MA_KH;
         private DateTime _NGAYXUATHD;
         private int _TONGTIENBAN;
+        private bool _DATHANHTOAN;
         public string MA_HDB
         {
             get { return _MA_HDB; }
@@ -38,14 +39,20 @@ namespace DTO_QuanLyBK
             get { return _TONGTIENBAN; }
             set { _TONGTIENBAN = value; }
         }
+        public bool DATHANHTOAN
+        {
+            get { return _DATHANHTOAN; }
+            set { _DATHANHTOAN = value; }
+        }
         public DTO_HoaDonBan() { }
-        public DTO_HoaDonBan(string idhdb, string idnv, string idkh, DateTime ngayxuat,int tongtien)
+        public DTO_HoaDonBan(string idhdb, string idnv, string idkh, DateTime ngayxuat,int tongtien,bool dathanhtoan)
         {
             this.MA_HDB = idhdb;
             this.MA_NV = idnv;
             this.MA_KH = idkh;
             this.NGAYXUATHD = ngayxuat;
             this.TONGTIENBAN = tongtien;
+            this.DATHANHTOAN=dathanhtoan;
         }
     }
 }

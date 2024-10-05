@@ -13,7 +13,7 @@ namespace DAL_QuanLyBK
     {
         public DataTable getHoaDonBan()
         {
-            SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM HOADONBANHANG", _conn);
+            SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM HOADONBANHANG order by MaHDB", _conn);
             DataTable dthoadonban = new DataTable();
             da.Fill(dthoadonban);
             return dthoadonban;
@@ -23,7 +23,7 @@ namespace DAL_QuanLyBK
             try
             {
                 _conn.Open();
-                string SQL = string.Format("INSERT INTO HOADONBANHANG(MaHDB,MaNV,MaKH) VALUES ('{0}','{1}','{2}')", hdb.MA_HDB, hdb.MA_NV, hdb.MA_KH);
+                string SQL = string.Format("INSERT INTO HOADONBANHANG(MaHDB,MaNV,MaKH,TongTienBan,DaThanhToan) VALUES ('{0}','{1}','{2}',0,0)", hdb.MA_HDB, hdb.MA_NV, hdb.MA_KH);
                 SqlCommand cmd = new SqlCommand(SQL, _conn);
                 if (cmd.ExecuteNonQuery() > 0)
                 {
@@ -67,12 +67,11 @@ namespace DAL_QuanLyBK
             try
             {
                 _conn.Open();
-                string SQL = string.Format("DELETE FROM HOADONBANHANG WHERE MaHDB='{0}'", MaHDB);
-                SqlCommand cmd = new SqlCommand(SQL, _conn);
-                if (cmd.ExecuteNonQuery() > 0)
-                {
-                    return true;
-                }
+                SqlCommand cmd = new SqlCommand("sp_XoaHoaDonBan", _conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@MaHDB", MaHDB);
+                cmd.ExecuteNonQuery();
+                return true;
             }
             catch (Exception ex)
             {
@@ -92,11 +91,11 @@ namespace DAL_QuanLyBK
                 string SQL = string.Format("SELECT MaSP,MaNCC,MaLSP,TenSP,SoLuongSP,DVT,DonGiaNhap,DonGiaBan,HinhAnh FROM SANPHAM WHERE");
                 if (cbFind == "Mã sản phẩm")
                 {
-                    SQL += string.Format(" MaSP like N'%" + txtFind.Trim() + "%'");
+                    SQL += string.Format(" MaSP like N'%" + txtFind.Trim() + "%' order by MaHDB");
                 }
                 else if (cbFind == "Tên sản phẩm")
                 {
-                    SQL += string.Format(" TenSP like N'%" + txtFind.Trim() + "%'");
+                    SQL += string.Format(" TenSP like N'%" + txtFind.Trim() + "%' order by MaHDB");
 
                 }
                 SqlCommand cmd = new SqlCommand(SQL, _conn);
@@ -121,7 +120,7 @@ namespace DAL_QuanLyBK
             {
                 _conn.Open();
                 List<string> maNV_List = new List<string>();
-                string SQL = string.Format("SELECT MaNV FROM NHANVIEN");
+                string SQL = string.Format("SELECT MaNV FROM NHANVIEN where MaQuyen='QL' or MaQuyen='NVBH'");
                 SqlCommand cmd = new SqlCommand(SQL, _conn);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
@@ -275,7 +274,7 @@ namespace DAL_QuanLyBK
                 }
                 else if (cbFind == "Mã khách hàng")
                 {
-                    SQL += string.Format(" MaKH like N'%" + txtFind.Trim() + "%'");
+                    SQL += string.Format(" MaKH like '" + txtFind + "'");
 
                 }
                 SqlCommand cmd = new SqlCommand(SQL, _conn);
@@ -283,6 +282,74 @@ namespace DAL_QuanLyBK
                 DataTable dataTable = new DataTable();
                 adapter.Fill(dataTable);
                 return dataTable;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                _conn.Close();
+            }
+        }
+        public void CapNhatNoKhachHang(string maKH, int soTien)
+        {
+            try
+            {
+                _conn.Open();
+                string query = "UPDATE KHACHHANG SET TienNo = TienNo + @SoTien WHERE MaKH = @MaKH";
+                SqlCommand cmd = new SqlCommand(query, _conn);
+                cmd.Parameters.AddWithValue("@SoTien", soTien);
+                cmd.Parameters.AddWithValue("@MaKH", maKH);
+                cmd.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                _conn.Close();
+            }
+        }
+        public bool LayTrangThaiHoaDon(string maHoaDon)
+        {
+            bool trangThai = false;
+            try
+            {
+                _conn.Open();
+                string query = "SELECT DaThanhToan FROM HOADONBANHANG WHERE MaHDB = @MaHoaDon";
+                SqlCommand cmd = new SqlCommand(query, _conn);
+                cmd.Parameters.AddWithValue("@MaHoaDon", maHoaDon);
+                object result = cmd.ExecuteScalar(); // Lấy giá trị duy nhất từ cột 'DaThanhToan'
+
+                if (result != null)
+                {
+                    trangThai = Convert.ToBoolean(result); // Chuyển đổi giá trị về kiểu bool
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                _conn.Close();
+            }
+            return trangThai;
+        }
+        public void CapNhatTrangThaiHoaDon(string maHoaDon, bool trangthai)
+        {
+            try
+            {
+                _conn.Open();
+                string query = "UPDATE HOADONBANHANG SET DaThanhToan = @TrangThai WHERE MaHDB = @MaHoaDon";
+                SqlCommand cmd = new SqlCommand(query, _conn);
+                cmd.Parameters.AddWithValue("@TrangThai", trangthai);
+                cmd.Parameters.AddWithValue("@MaHoaDon", maHoaDon);
+                cmd.ExecuteNonQuery();
 
             }
             catch (Exception ex)

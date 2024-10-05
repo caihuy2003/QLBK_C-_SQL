@@ -13,7 +13,7 @@ namespace DAL_QuanLyBK
     {
         public DataTable getNhanVien()
         {
-            SqlDataAdapter da = new SqlDataAdapter("SELECT MaNV,TenNV,NgaySinh,DiaChiNV,SDT_NV,ChucVu,NgayVaoLam,GioiTinh,MatKhau,HinhAnh FROM dbo.NHANVIEN", _conn);
+            SqlDataAdapter da = new SqlDataAdapter("SELECT MaNV,MaQuyen,HoNV,TenNV,NgaySinh,DiaChiNV,SDT_NV,NgayVaoLam,GioiTinh,Luong,TaiKhoan,MatKhau,HinhAnh FROM dbo.NHANVIEN order by MaNV", _conn);
             DataTable dtNhanVien = new DataTable();
             da.Fill(dtNhanVien);
             return dtNhanVien;
@@ -23,7 +23,7 @@ namespace DAL_QuanLyBK
             try
             {
                 _conn.Open();
-                string SQL = string.Format("INSERT INTO NHANVIEN(MaNV,TenNV,DiaChiNV,SDT_NV,ChucVu,NgayVaoLam,GioiTinh,MatKhau,HinhAnh,NgaySinh) VALUES ('{0}',N'{1}',N'{2}','{3}',N'{4}','{5}',N'{6}',N'{7}',@HinhAnh,'{8}')", NV.MA_NV, NV.TEN_NV, NV.DIACHI_NV, NV.SDT_NV,NV.CHUCVU,NV.NGAYVAOLAM, NV.GIOITINH_NV,NV.MATKHAU,NV.NGAYSINH);
+                string SQL = string.Format("INSERT INTO NHANVIEN(MaNV,TenNV,DiaChiNV,SDT_NV,MaQuyen,NgayVaoLam,GioiTinh,MatKhau,HinhAnh,NgaySinh,HoNV,TaiKhoan,Luong) VALUES ('{0}',N'{1}',N'{2}','{3}','{4}','{5}',N'{6}',N'{7}',@HinhAnh,'{8}',N'{9}','{10}',{11})", NV.MA_NV, NV.TEN_NV, NV.DIACHI_NV, NV.SDT_NV,NV.CHUCVU,NV.NGAYVAOLAM, NV.GIOITINH_NV,NV.MATKHAU,NV.NGAYSINH,NV.HONV,NV.TAIKHOAN,NV.LUONG);
                 SqlCommand cmd = new SqlCommand(SQL, _conn);
                 cmd.Parameters.AddWithValue("@HinhAnh",NV.HINHANH);
                 if (cmd.ExecuteNonQuery() > 0)
@@ -46,8 +46,8 @@ namespace DAL_QuanLyBK
             try
             {
                 _conn.Open();
-                string SQL = string.Format("UPDATE NHANVIEN SET TenNV=N'{0}' ,DiaChiNV=N'{1}',SDT_NV='{2}',ChucVu=N'{3}',NgayVaoLam='{4}',GioiTinh=N'{5}',MatKhau='{6}',HinhAnh= @HinhAnh, NgaySinh='{9}' where MaNV='{8}'",
-                    NV.TEN_NV, NV.DIACHI_NV, NV.SDT_NV,NV.CHUCVU,NV.NGAYVAOLAM, NV.GIOITINH_NV,NV.MATKHAU,NV.HINHANH, NV.MA_NV,NV.NGAYSINH);
+                string SQL = string.Format("UPDATE NHANVIEN SET TenNV=N'{0}' ,DiaChiNV=N'{1}',SDT_NV='{2}',MaQuyen='{3}',NgayVaoLam='{4}',GioiTinh=N'{5}',MatKhau='{6}',HinhAnh= @HinhAnh, NgaySinh='{9}',HoNV=N'{10}',TaiKhoan='{11}',Luong={12} where MaNV='{8}'",
+                    NV.TEN_NV, NV.DIACHI_NV, NV.SDT_NV,NV.CHUCVU,NV.NGAYVAOLAM, NV.GIOITINH_NV,NV.MATKHAU,NV.HINHANH, NV.MA_NV,NV.NGAYSINH, NV.HONV, NV.TAIKHOAN, NV.LUONG);
                 SqlCommand cmd = new SqlCommand(SQL, _conn);
                 cmd.Parameters.AddWithValue("@HinhAnh", NV.HINHANH);
                 if (cmd.ExecuteNonQuery() > 0)
@@ -92,14 +92,14 @@ namespace DAL_QuanLyBK
             try
             {
                 _conn.Open();
-                string SQL = string.Format("SELECT MaNV,TenNV,NgaySinh,DiaChiNV,SDT_NV,ChucVu,NgayVaoLam,GioiTinh,MatKhau,HinhAnh FROM NHANVIEN WHERE");
+                string SQL = string.Format("SELECT MaNV,MaQuyen,HoNV,TenNV,NgaySinh,DiaChiNV,SDT_NV,NgayVaoLam,GioiTinh,Luong,TaiKhoan,MatKhau,HinhAnh FROM NHANVIEN WHERE");
                 if (cbFind == "Mã nhân viên")
                 {
-                    SQL += string.Format(" MaNV like N'%" + txtFind.Trim() + "%'");
+                    SQL += string.Format(" MaNV like N'%" + txtFind.Trim() + "%' order by MaNV");
                 }
                 else if (cbFind == "Tên nhân viên")
                 {
-                    SQL += string.Format(" TenNV like N'%" + txtFind.Trim() + "%'");
+                    SQL += string.Format(" TenNV like N'%" + txtFind.Trim() + "%' order by MaNV");
 
                 }
                 SqlCommand cmd = new SqlCommand(SQL, _conn);

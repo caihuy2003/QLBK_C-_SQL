@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\QuanLyBangKeo\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -48,9 +51,11 @@
     <Compile Include="DAL_HoaDonBan.cs" />
     <Compile Include="DAL_HoaDonNhap.cs" />
     <Compile Include="DAL_KhachHang.cs" />
+    <Compile Include="DAL_LoaiKhachHang.cs" />
     <Compile Include="DAL_LoaiSanPham.cs" />
     <Compile Include="DAL_NhaCungCap.cs" />
     <Compile Include="DAL_NhanVien.cs" />
+    <Compile Include="DAL_NhatKyHoatDong.cs" />
     <Compile Include="DAL_SanPham.cs" />
     <Compile Include="DAL_TKBC.cs" />
     <Compile Include="DBConnect.cs" />
@@ -62,6 +67,9 @@
       <Project>{41612c4a-e0b0-4ea1-9f6a-8162f54e65a1}</Project>
       <Name>DTO_QuanLyBK</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

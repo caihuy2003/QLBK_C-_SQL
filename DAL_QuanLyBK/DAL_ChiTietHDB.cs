@@ -20,7 +20,7 @@ namespace DAL_QuanLyBK
             {
                 _conn.Open();
 
-                string SQL = "SELECT MaHDB, MaSP, TenSP, SLBan, GiaBan,GiamGia, ThanhTien FROM CHITIETHDB WHERE MaHDB = @MaHDB";
+                string SQL = "SELECT MaHDB, a.MaSP, TenSP,DVT, SLBan, DonGiaBan,ChietKhau, ThanhTien,a.GhiChu FROM CHITIETHDB a join SANPHAM b on a.MaSP=b.MaSP WHERE MaHDB = @MaHDB";
 
                 SqlCommand cmd = new SqlCommand(SQL, _conn);
                 cmd.Parameters.AddWithValue("@MaHDB", MaHDB);
@@ -43,21 +43,39 @@ namespace DAL_QuanLyBK
         {
             try
             {
+                _conn.Open();
+                string query = "SELECT TenSP, DVT,DonGiaBan FROM SANPHAM WHERE MaSP = @MaSP";
+                SqlCommand cmd = new SqlCommand(query, _conn);
+                cmd.Parameters.AddWithValue("@MaSP", ct_hdb.MA_SP);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    ct_hdb.TENSP = reader["TenSP"].ToString();
+                    ct_hdb.DVT = reader["DVT"].ToString();
+                    ct_hdb.DONGIANBAN = Convert.ToInt32(reader["DonGiaBan"]);
+                }
                 // Thêm dòng vào DataTable tạm thời
-                DataRow newRow = dataSet.Tables["ChiTietHDB"].NewRow();
+                DataRow newRow = dataSet.Tables["ChiTietHDB1"].NewRow();
                 newRow["MaHDB"] = ct_hdb.MA_HDB;
                 newRow["MaSP"] = ct_hdb.MA_SP;
-                newRow["TenSP"] = ct_hdb.TEN_SP;
+                newRow["TenSP"] = ct_hdb.TENSP;
+                newRow["DVT"]=ct_hdb.DVT;
                 newRow["SLBan"] = ct_hdb.SLBAN;
-                newRow["GiaBan"] = ct_hdb.GIABAN;
-                newRow["GiamGia"] = ct_hdb.GIAMGIA;
+                newRow["DonGiaBan"] = ct_hdb.DONGIANBAN;
+                newRow["ChietKhau"] = ct_hdb.CHIETKHAU;
                 newRow["ThanhTien"] = ct_hdb.THANHTIEN;
-                dataSet.Tables["ChiTietHDB"].Rows.Add(newRow);
+                newRow["GhiChu"] = ct_hdb.GHICHU;
+                dataSet.Tables["ChiTietHDB1"].Rows.Add(newRow);
                 return true;
             }
             catch (Exception ex)
             {
                 throw ex;
+            }
+            finally
+            {
+                _conn.Close();
             }
         }
         public bool SuaChiTietHDBTamThoi(DTO_ChiTietHDB ct_hdb, DataSet dataSet)
@@ -65,14 +83,14 @@ namespace DAL_QuanLyBK
             try
             {
                 // Tìm dòng cần sửa trong DataTable tạm thời
-                DataRow[] rows = dataSet.Tables["ChiTietHDB"].Select($"MaSP = '{ct_hdb.MA_SP}'");
+                DataRow[] rows = dataSet.Tables["ChiTietHDB1"].Select($"MaSP = '{ct_hdb.MA_SP}'");
                 if (rows.Length > 0)
                 {
                     rows[0]["MaHDB"] = ct_hdb.MA_HDB;
-                    rows[0]["TenSP"] = ct_hdb.TEN_SP;
+                    //rows[0]["TenSP"] = ct_hdb.TEN_SP;
                     rows[0]["SLBan"] = ct_hdb.SLBAN;
-                    rows[0]["GiaBan"] = ct_hdb.GIABAN; 
-                    rows[0]["GiamGia"] = ct_hdb.GIAMGIA;
+                    //rows[0]["GiaBan"] = ct_hdb.GIABAN; 
+                    //rows[0]["GiamGia"] = ct_hdb.GIAMGIA;
                     rows[0]["ThanhTien"] = ct_hdb.THANHTIEN;
                     return true;
                 }
@@ -88,7 +106,7 @@ namespace DAL_QuanLyBK
             try
             {
                 // Tìm dòng cần xóa trong DataTable tạm thời
-                DataRow[] rows = dataSet.Tables["ChiTietHDB"].Select($"MaHDB = '{maHDB}'");
+                DataRow[] rows = dataSet.Tables["ChiTietHDB1"].Select($"MaHDB = '{maHDB}'");
                 if (rows.Length > 0)
                 {
                     rows[0].Delete();
@@ -101,12 +119,12 @@ namespace DAL_QuanLyBK
                 throw ex;
             }
         }
-        public bool deleteChiTietHDB(string MaHDB)
+        public bool deleteChiTietHDB(string MaHDB,string MaSP)
         {
             try
             {
                 _conn.Open();
-                string SQL = string.Format("DELETE FROM CHITIETHDB WHERE MaHDB='{0}'", MaHDB);
+                string SQL = string.Format("DELETE FROM CHITIETHDB WHERE MaHDB='{0}' AND MaSP='{1}'", MaHDB,MaSP);
                 SqlCommand cmd = new SqlCommand(SQL, _conn);
                 if (cmd.ExecuteNonQuery() > 0)
                 {
@@ -128,7 +146,7 @@ namespace DAL_QuanLyBK
             try
             {
                 _conn.Open();
-                string SQL = "UPDATE SANPHAM SET SoLuongSP = SoLuongSP - @SoLuong WHERE MaSP = @MaSanPham";
+                string SQL = "UPDATE SANPHAM SET TonCuoi = TonCuoi - @SoLuong,Xuat=Xuat+@SoLuong WHERE MaSP = @MaSanPham";
 
                 SqlCommand cmd = new SqlCommand(SQL, _conn);
                 cmd.Parameters.AddWithValue("@MaSanPham", MaSP);
@@ -138,6 +156,33 @@ namespace DAL_QuanLyBK
                 {
                      throw new Exception("Không tìm thấy sản phẩm cần cập nhật.");
                 }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                _conn.Close();
+            }
+        }
+        public bool KiemTraSoLuong(string MaSP, int soluong)
+        {
+            try
+            {
+                _conn.Open();
+                string SQL = "SELECT TonCuoi FROM SANPHAM WHERE MaSP = @MaSanPham";
+
+                SqlCommand cmd = new SqlCommand(SQL, _conn);
+                cmd.Parameters.AddWithValue("@MaSanPham", MaSP);
+                SqlDataReader reader = cmd.ExecuteReader();
+                if(reader.Read())
+                {
+                    int soluongsanpham = reader.GetInt32(0);
+                    if (soluong < soluongsanpham)
+                        return true;
+                }
+                return false;
             }
             catch (Exception ex)
             {
@@ -297,7 +342,7 @@ namespace DAL_QuanLyBK
         {
             _conn.Open();
             SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "GetHoaDonBanHangByMaHDB";
+            cmd.CommandText = "HienDanhSachChiTietHoaDonBan";
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Connection = _conn;
             cmd.Parameters.Add(new SqlParameter("@MaHDB", MaHDB));
@@ -308,6 +353,48 @@ namespace DAL_QuanLyBK
             da.Fill(ds);
             _conn.Close();
             return ds;
+        }
+        public bool KiemTraTrungMaHDB(string MaHDB)
+        {
+            try
+            {
+                _conn.Open();
+                string SQL = "SELECT COUNT(*) FROM HOADONBANHANG WHERE MaHDB = @MaHDB";
+                SqlCommand cmd = new SqlCommand(SQL, _conn);
+                cmd.Parameters.AddWithValue("@MaHDB", MaHDB);
+                int count = Convert.ToInt32(cmd.ExecuteScalar());
+                return count > 0;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                _conn.Close();
+            }
+        }
+        public bool XoaChiTietBan(string MaHDB, string MaSP)
+        {
+            try
+            {
+                _conn.Open();
+                SqlCommand cmd = new SqlCommand("XoaChiTietBan", _conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@MaHDB", MaHDB);
+                cmd.Parameters.AddWithValue("@MaSP", MaSP);
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                _conn.Close();
+            }
         }
     }
 }

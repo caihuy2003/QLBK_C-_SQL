@@ -47,9 +47,11 @@
     <Compile Include="DTO_HoaDonBan.cs" />
     <Compile Include="DTO_HoaDonNhap.cs" />
     <Compile Include="DTO_KhachHang.cs" />
+    <Compile Include="DTO_LoaiKhachHang.cs" />
     <Compile Include="DTO_LoaiSanPham.cs" />
     <Compile Include="DTO_NhaCungCap.cs" />
     <Compile Include="DTO_NhanVien.cs" />
+    <Compile Include="DTO_NhatKyHoatDong.cs" />
     <Compile Include="DTO_SanPham.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />

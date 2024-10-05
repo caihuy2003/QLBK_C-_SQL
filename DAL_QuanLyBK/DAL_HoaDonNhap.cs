@@ -91,7 +91,7 @@ namespace DAL_QuanLyBK
             {
                 _conn.Open();
                 List<string> maNV_List = new List<string>();
-                string SQL = string.Format("SELECT MaNV FROM NHANVIEN");
+                string SQL = string.Format("SELECT MaNV FROM NHANVIEN where MaQuyen='QL'");
                 SqlCommand cmd = new SqlCommand(SQL, _conn);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())

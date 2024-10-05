@@ -55,7 +55,7 @@ namespace BUS_QuanLyBK
         }
         public bool checkcbFind(string cbFind)
         {
-            if (cbFind != "Mã sản phẩm" && cbFind != "Tên sản phẩm")
+            if (cbFind != "Mã sản phẩm" && cbFind != "Tên sản phẩm" && cbFind !="Mã nhà cung cấp" && cbFind !="Mã loại sản phẩm")
             {
                 return false;
             }

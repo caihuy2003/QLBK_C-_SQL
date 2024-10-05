@@ -12,6 +12,7 @@ namespace DTO_QuanLyBK
         private string _TEN_NCC;
         private string _DIACHI_NCC;
         private string _SDT_NCC;
+        private string _GHICHU;
         public string MA_NCC
         {
             get { return _MA_NCC; }
@@ -32,14 +33,19 @@ namespace DTO_QuanLyBK
             get { return _SDT_NCC; }
             set { _SDT_NCC = value; }
         }
-
+        public string GHICHU
+        {
+            get { return _GHICHU; }
+            set { _GHICHU = value; }
+        }
         public DTO_NhaCungCap() { }
-        public DTO_NhaCungCap(string id, string name, string address, string phone)
+        public DTO_NhaCungCap(string id, string name, string address, string phone,string ghichu)
         {
             this.MA_NCC = id;
             this.TEN_NCC = name;
             this.DIACHI_NCC = address;
             this.SDT_NCC = phone;
+            this.GHICHU = ghichu;
         }
     }
 }

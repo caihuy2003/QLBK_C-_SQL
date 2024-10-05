@@ -2,6 +2,7 @@
 using CrystalDecisions.ReportAppServer.DataDefModel;
 using DTO_QuanLyBK;
 using System;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
@@ -11,6 +12,7 @@ namespace QuanLyBangKeo
     {
         BUS_ChiTietNhap buschitietnhap = new BUS_ChiTietNhap();
         BUS_HoaDonNhap bushoadonnhap = new BUS_HoaDonNhap();
+        BUS_NhatKyHoatDong busnkhd=new BUS_NhatKyHoatDong();
         int tong;
         public ChiTietHDN()
         {
@@ -19,18 +21,25 @@ namespace QuanLyBangKeo
 
         private void NhapHang_Load(object sender, EventArgs e)
         {
+            // TODO: This line of code loads data into the 'dataSet1.ChiTietNhap1' table. You can move, or remove it, as needed.
+            //this.chiTietNhap1TableAdapter.Fill(this.dataSet1.ChiTietNhap1);
+         
             cbMaNCC.DataSource = buschitietnhap.GetMaNCC();
-            cbMaSP.DataSource = buschitietnhap.GetMaSanPham();
+            cbMaSP.DataSource = buschitietnhap.GetMaSanPham(cbMaNCC.Text);
+            dgvCT_HDN.DataSource = buschitietnhap.getChiTietNhap(txtMaHDN.Text);
+            dgvCT_HDN.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
 
-        }
-
-        private void dgvCT_HDN_Click(object sender, DataGridViewCellEventArgs e)
-        {
-            DataGridViewRow row = dgvCT_HDN.SelectedRows[0];
-            cbMaSP.Text = row.Cells[1].Value.ToString();
-            txtSoLuong.Text = row.Cells[2].Value.ToString();
-            txtDGNhap.Text = row.Cells[3].Value.ToString();
-            txtThanhTien.Text = row.Cells[4].Value.ToString();
+            // Tự động điều chỉnh kích thước cột cuối cùng để vừa với chiều rộng DataGridView
+            dgvCT_HDN.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            Image trashIcon = Properties.Resources.icons8_delete_50;
+            Image resizedIcon = new Bitmap(trashIcon, new Size(20, 20));
+            DataGridViewImageColumn imgColumn = new DataGridViewImageColumn();
+            imgColumn.Name = "DeleteColumn";
+            imgColumn.HeaderText = "";
+            imgColumn.Image = resizedIcon;
+            imgColumn.Width = 10;
+            //imgColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dgvCT_HDN.Columns.Add(imgColumn);
         }
 
         private void cbMaNCC_SelectedIndexChanged(object sender, EventArgs e)
@@ -39,6 +48,7 @@ namespace QuanLyBangKeo
             string[] thongTinNCC = buschitietnhap.LayThongTinNCC(mancc); // Lấy thông tin khách hàng từ BLL
 
             txtTenNCC.Text = thongTinNCC[0];
+            cbMaSP.DataSource = buschitietnhap.GetMaSanPham(cbMaNCC.Text);
         }
         private void txtMaNV_TextChanged(object sender, EventArgs e)
         {
@@ -103,8 +113,9 @@ namespace QuanLyBangKeo
                         soluong = Convert.ToInt32(txtSoLuong.Text);
                         dongianhap = Convert.ToInt32(txtDGNhap.Text);
                         thanhtien = Convert.ToInt32(txtThanhTien.Text);
-                        DTO_ChiTietNhap ctn = new DTO_ChiTietNhap(txtMaHDN.Text, cbMaSP.Text, txtTenSP.Text, soluong, dongianhap, thanhtien);
+                        DTO_ChiTietNhap ctn = new DTO_ChiTietNhap(txtMaHDN.Text, cbMaSP.Text, soluong, thanhtien,txtGhiChu.Text);
                         buschitietnhap.addChiTietNhap(ctn, dataSet1);
+                        dgvCT_HDN.DataSource=chiTietNhapBindingSource;
                     }
                 }
                 else
@@ -119,52 +130,17 @@ namespace QuanLyBangKeo
 
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
-        {
-
-            if (dgvCT_HDN.SelectedRows.Count > 0)
-            {
-                // Lấy row hiện tại
-                DataGridViewRow row = dgvCT_HDN.SelectedRows[0];
-                // Xóa
-                if (buschitietnhap.XoaChiTietHDNTamThoi(txtMaHDN.Text, dataSet1))
-                {
-                    MessageBox.Show("Xóa thành công");
-                }
-                else
-                {
-                    MessageBox.Show("Xóa ko thành công");
-                }
-            }
-            else
-            {
-                MessageBox.Show("Hãy chọn thành viên muốn xóa");
-            }
-        }
-
-
-        private void btnEdit_Click(object sender, EventArgs e)
-        {
-            int soluong, dongianhap, thanhtien;
-            if (int.TryParse(txtSoLuong.Text, out soluong) && int.TryParse(txtDGNhap.Text, out dongianhap) && int.TryParse(txtThanhTien.Text, out thanhtien))
-            {
-                soluong = Convert.ToInt32(txtSoLuong.Text);
-                dongianhap = Convert.ToInt32(txtDGNhap.Text);
-                thanhtien = Convert.ToInt32(txtThanhTien.Text);
-                DTO_ChiTietNhap ctn = new DTO_ChiTietNhap(txtMaHDN.Text, cbMaSP.Text, txtTenSP.Text, soluong, dongianhap, thanhtien);
-                buschitietnhap.editChiTietNhap(ctn, dataSet1);
-            }
-        }
-
         private void btnExcel_Click(object sender, EventArgs e)
         {
             Funtion.ToExcel(dgvCT_HDN, @"D:\LapTrinhCSDL\QLBK", "_QL_ChiTietHoaDon", "chi tiet hoa don");
             MessageBox.Show("Xuất file Excel thành công");
+            DTO_NhatKyHoatDong nkhd = new DTO_NhatKyHoatDong(txtMaNV.Text, DateTime.Now, "Xuất file excel", "Xuất file chi tiết hóa đơn nhập mã " + txtMaHDN.Text);
+            busnkhd.AddNKHD(nkhd);
         }
 
         private void btnCancle_Click(object sender, EventArgs e)
         {
-            dataSet1.Tables["ChiTietNhap"].Clear();
+            dataSet1.Tables["ChiTietNhap1"].Clear();
             this.Close();
         }
 
@@ -183,9 +159,9 @@ namespace QuanLyBangKeo
             {
                 DataGridViewRow row1 = dgvCT_HDN.Rows[i - 1];
 
-                if (row1.Cells[5].Value != null)
+                if (row1.Cells[6].Value != null)
                 {
-                    tong += int.Parse(row1.Cells[5].Value.ToString());
+                    tong += int.Parse(row1.Cells[6].Value.ToString());
                 }
                 else
                 {
@@ -200,18 +176,21 @@ namespace QuanLyBangKeo
             {
                 this.Validate();
                 this.chiTietNhapBindingSource.EndEdit();
-                this.chiTietNhapTableAdapter.Update(this.dataSet1);
+                this.chiTietNhap1TableAdapter.Update(this.dataSet1);
                 int tongTienNhap = int.Parse(txttongthanhtoan.Text.Replace(",", ""));
                 DTO_HoaDonNhap hdn=new DTO_HoaDonNhap(txtMaHDN.Text+"    ",txtMaNV.Text,dtNgayXuatHD.Value,tongTienNhap);
                 if (bushoadonnhap.edithdn(hdn))
                 {
+                    buschitietnhap.CapNhatSoLuong(dataSet1);
                     MessageBox.Show("Cập nhật thành công");
+                    DTO_NhatKyHoatDong nkhd = new DTO_NhatKyHoatDong(txtMaNV.Text, DateTime.Now, "Tạo hóa đơn thành công", "Xác nhận tạo hóa đơn mới thành công mã " + txtMaHDN.Text + ".\nTổng tiền:" + tongTienNhap);
+                    busnkhd.AddNKHD(nkhd);
                 }
                 else
                 {
                     MessageBox.Show("Cập nhật không thành công");
                 }
-                dataSet1.Tables["ChiTietNhap"].Clear();
+                dataSet1.Tables["ChiTietNhap1"].Clear();
                 this.Close();
             }
         }
@@ -224,54 +203,36 @@ namespace QuanLyBangKeo
             }
         }
 
-        private void dgvCT_HDN_SelectionChanged(object sender, EventArgs e)
-        {
-            if (dgvCT_HDN.SelectedRows.Count > 0)
-            {
-                DataGridViewRow selectedRow = dgvCT_HDN.SelectedRows[0];
-
-                string maSP = selectedRow.Cells[1].Value.ToString();
-                string tenSP = selectedRow.Cells[2].Value.ToString();
-                int soluong = (int)selectedRow.Cells[3].Value;
-                int dgnhap = (int)selectedRow.Cells[4].Value;
-                int thanhtien = (int)selectedRow.Cells[5].Value;
-                
-                // Gán dữ liệu lên các TextBox tương ứng
-                cbMaSP.Text = maSP;
-                txtTenSP.Text = tenSP;
-                txtSoLuong.Text = soluong.ToString();
-                txtDGNhap.Text = dgnhap.ToString();
-                txtThanhTien.Text = thanhtien.ToString();
-            }
-        }
-
+        
         private void ChiTietHDN_FormClosed(object sender, FormClosedEventArgs e)
         {
-            HoaDonNhap hdn= new HoaDonNhap();
-            hdn.Show();
+ 
         }
 
-        private void button3_Click(object sender, EventArgs e)//btn_InHoaDon
+
+        private void dgvCT_HDN_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (cbMaNCC.Text != "" && cbMaSP.Text != "" && txtSoLuong.Text != "")
+            if (e.ColumnIndex == dgvCT_HDN.Columns["DeleteColumn"].Index && e.RowIndex >= 0)
             {
-                this.Validate();
-                this.chiTietNhapBindingSource.EndEdit();
-                this.chiTietNhapTableAdapter.Update(this.dataSet1);
-                int tongTienNhap = int.Parse(txttongthanhtoan.Text.Replace(",", ""));
-                DTO_HoaDonNhap hdn = new DTO_HoaDonNhap(txtMaHDN.Text + "    ", txtMaNV.Text, dtNgayXuatHD.Value, tongTienNhap);
-                if (bushoadonnhap.edithdn(hdn))
+                // Hiện hộp thoại xác nhận
+                DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn xóa hàng này không?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if (result == DialogResult.Yes)
                 {
-                    MessageBox.Show("Cập nhật thành công");
+                    // Lấy hàng hiện tại
+                    DataGridViewRow row = dgvCT_HDN.Rows[e.RowIndex];
+
+                    // Gọi phương thức xóa trong lớp bus
+                    if (buschitietnhap.XoaChiTietHDNTamThoi(txtMaHDN.Text, dataSet1))
+                    {
+                        // Cập nhật lại DataSet sau khi xóa
+                        MessageBox.Show("Xóa thành công");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Xóa không thành công");
+                    }
                 }
-                else
-                {
-                    MessageBox.Show("Cập nhật không thành công");
-                }
-                dataSet1.Tables["ChiTietNhap"].Clear();
-                ReportHDN rphdn= new ReportHDN();
-                rphdn.SetMaHoaDonValue(txtMaHDN.Text,txtMaNV.Text);
-                rphdn.ShowDialog();
             }
         }
     }

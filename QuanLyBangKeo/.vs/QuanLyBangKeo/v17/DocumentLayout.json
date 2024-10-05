@@ -1,38 +1,38 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\",
+  "WorkspaceRootPath": "D:\\LapTrinhCSDL\\2151050152_2151053051_2151050514\\QuanLyBangKeo\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|d:\\laptrinhcsdl\\qlbk\\quanlybangkeo\\chitiethdb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|solutionrelative:chitiethdb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|d:\\laptrinhcsdl\\2151050152_2151053051_2151050514\\quanlybangkeo\\trangchu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|solutionrelative:trangchu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|d:\\laptrinhcsdl\\qlbk\\quanlybangkeo\\chitiethdb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|solutionrelative:chitiethdb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|D:\\LapTrinhCSDL\\2151050152_2151053051_2151050514\\QuanLyBangKeo\\trangchu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|solutionrelative:trangchu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|d:\\laptrinhcsdl\\qlbk\\quanlybangkeo\\hoadonban.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|solutionrelative:hoadonban.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|D:\\LapTrinhCSDL\\2151050152_2151053051_2151050514\\QuanLyBangKeo\\sanpham.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|solutionrelative:sanpham.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|d:\\laptrinhcsdl\\qlbk\\quanlybangkeo\\reporthdn.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|solutionrelative:reporthdn.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|D:\\LapTrinhCSDL\\2151050152_2151053051_2151050514\\QuanLyBangKeo\\sanpham.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|solutionrelative:sanpham.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\reporthdb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|solutionrelative:reporthdb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|D:\\LapTrinhCSDL\\2151050152_2151053051_2151050514\\QuanLyBangKeo\\nhanvien.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|solutionrelative:nhanvien.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\reporthdb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|solutionrelative:reporthdb.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|D:\\LapTrinhCSDL\\2151050152_2151053051_2151050514\\QuanLyBangKeo\\nhanvien.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|solutionrelative:nhanvien.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\chitiethdn.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|solutionrelative:chitiethdn.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|D:\\LapTrinhCSDL\\2151050152_2151053051_2151050514\\QuanLyBangKeo\\tkbc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|solutionrelative:tkbc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\hoadonban.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|solutionrelative:hoadonban.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|D:\\LapTrinhCSDL\\2151050152_2151053051_2151050514\\QuanLyBangKeo\\tkkh.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{33782E3B-36D3-4003-AC5C-36EAA04EFBFA}|QuanLyBangKeo.csproj|solutionrelative:tkkh.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -42,108 +42,102 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ChiTietHDB.cs [Design]",
-              "DocumentMoniker": "D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\ChiTietHDB.cs",
-              "RelativeDocumentMoniker": "ChiTietHDB.cs",
-              "ToolTip": "D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\ChiTietHDB.cs [Design]",
-              "RelativeToolTip": "ChiTietHDB.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-18T09:05:53.929Z",
-              "EditorCaption": " [Design]"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "ChiTietHDB.cs",
-              "DocumentMoniker": "D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\ChiTietHDB.cs",
-              "RelativeDocumentMoniker": "ChiTietHDB.cs",
-              "ToolTip": "D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\ChiTietHDB.cs",
-              "RelativeToolTip": "ChiTietHDB.cs",
-              "ViewState": "AQIAACABAAAAAAAAAAAAADIBAABSAAAA",
+              "Title": "TrangChu.cs",
+              "DocumentMoniker": "D:\\LapTrinhCSDL\\2151050152_2151053051_2151050514\\QuanLyBangKeo\\TrangChu.cs",
+              "RelativeDocumentMoniker": "TrangChu.cs",
+              "ToolTip": "D:\\LapTrinhCSDL\\2151050152_2151053051_2151050514\\QuanLyBangKeo\\TrangChu.cs",
+              "RelativeToolTip": "TrangChu.cs",
+              "ViewState": "AQIAAPsAAAAAAAAAAAAswAYBAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-18T08:32:11.024Z",
+              "WhenOpened": "2024-10-02T05:56:37.175Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "HoaDonBan.cs [Design]",
-              "DocumentMoniker": "D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\HoaDonBan.cs",
-              "RelativeDocumentMoniker": "HoaDonBan.cs",
-              "ToolTip": "D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\HoaDonBan.cs [Design]",
-              "RelativeToolTip": "HoaDonBan.cs [Design]",
+              "DocumentIndex": 0,
+              "Title": "TrangChu.cs [Design]",
+              "DocumentMoniker": "D:\\LapTrinhCSDL\\2151050152_2151053051_2151050514\\QuanLyBangKeo\\TrangChu.cs",
+              "RelativeDocumentMoniker": "TrangChu.cs",
+              "ToolTip": "D:\\LapTrinhCSDL\\2151050152_2151053051_2151050514\\QuanLyBangKeo\\TrangChu.cs [Design]",
+              "RelativeToolTip": "TrangChu.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-18T08:20:14.798Z",
+              "WhenOpened": "2024-10-02T05:56:33.111Z",
               "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "ReportHDN.cs",
-              "DocumentMoniker": "D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\ReportHDN.cs",
-              "RelativeDocumentMoniker": "ReportHDN.cs",
-              "ToolTip": "D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\ReportHDN.cs",
-              "RelativeToolTip": "ReportHDN.cs",
-              "ViewState": "AQIAAAwAAAAAAAAAAAAAABwAAAANAAAA",
+              "Title": "SanPham.cs [Design]",
+              "DocumentMoniker": "D:\\LapTrinhCSDL\\2151050152_2151053051_2151050514\\QuanLyBangKeo\\SanPham.cs",
+              "RelativeDocumentMoniker": "SanPham.cs",
+              "ToolTip": "D:\\LapTrinhCSDL\\2151050152_2151053051_2151050514\\QuanLyBangKeo\\SanPham.cs [Design]",
+              "RelativeToolTip": "SanPham.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-17T18:35:32.212Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-02T02:55:29.835Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "SanPham.cs",
+              "DocumentMoniker": "D:\\LapTrinhCSDL\\2151050152_2151053051_2151050514\\QuanLyBangKeo\\SanPham.cs",
+              "RelativeDocumentMoniker": "SanPham.cs",
+              "ToolTip": "D:\\LapTrinhCSDL\\2151050152_2151053051_2151050514\\QuanLyBangKeo\\SanPham.cs",
+              "RelativeToolTip": "SanPham.cs",
+              "ViewState": "AQIAAFcAAAAAAAAAAAAkwF8AAAAuAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-27T11:52:18.666Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "ReportHDB.cs",
-              "DocumentMoniker": "D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\ReportHDB.cs",
-              "RelativeDocumentMoniker": "ReportHDB.cs",
-              "ToolTip": "D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\ReportHDB.cs",
-              "RelativeToolTip": "ReportHDB.cs",
-              "ViewState": "AQIAABAAAAAAAAAAAAAAACAAAAAlAAAA",
+              "Title": "NhanVien.Designer.cs",
+              "DocumentMoniker": "D:\\LapTrinhCSDL\\2151050152_2151053051_2151050514\\QuanLyBangKeo\\NhanVien.Designer.cs",
+              "RelativeDocumentMoniker": "NhanVien.Designer.cs",
+              "ToolTip": "D:\\LapTrinhCSDL\\2151050152_2151053051_2151050514\\QuanLyBangKeo\\NhanVien.Designer.cs",
+              "RelativeToolTip": "NhanVien.Designer.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-17T17:30:48.519Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-27T11:02:55.983Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "ReportHDB.cs [Design]",
-              "DocumentMoniker": "D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\ReportHDB.cs",
-              "RelativeDocumentMoniker": "ReportHDB.cs",
-              "ToolTip": "D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\ReportHDB.cs [Design]",
-              "RelativeToolTip": "ReportHDB.cs [Design]",
+              "Title": "NhanVien.cs [Design]",
+              "DocumentMoniker": "D:\\LapTrinhCSDL\\2151050152_2151053051_2151050514\\QuanLyBangKeo\\NhanVien.cs",
+              "RelativeDocumentMoniker": "NhanVien.cs",
+              "ToolTip": "D:\\LapTrinhCSDL\\2151050152_2151053051_2151050514\\QuanLyBangKeo\\NhanVien.cs [Design]",
+              "RelativeToolTip": "NhanVien.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-17T17:30:15.726Z",
-              "EditorCaption": " [Design]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "ChiTietHDN.cs",
-              "DocumentMoniker": "D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\ChiTietHDN.cs",
-              "RelativeDocumentMoniker": "ChiTietHDN.cs",
-              "ToolTip": "D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\ChiTietHDN.cs",
-              "RelativeToolTip": "ChiTietHDN.cs",
-              "ViewState": "AQIAAP0AAAAAAAAAAAAAABIBAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-14T08:06:38.718Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-23T14:17:47.655Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
-              "Title": "HoaDonBan.cs",
-              "DocumentMoniker": "D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\HoaDonBan.cs",
-              "RelativeDocumentMoniker": "HoaDonBan.cs",
-              "ToolTip": "D:\\LapTrinhCSDL\\QLBK\\QuanLyBangKeo\\HoaDonBan.cs",
-              "RelativeToolTip": "HoaDonBan.cs",
-              "ViewState": "AQIAAGEAAAAAAAAAAAAAAGwAAABKAAAA",
+              "Title": "TKKH.cs",
+              "DocumentMoniker": "D:\\LapTrinhCSDL\\2151050152_2151053051_2151050514\\QuanLyBangKeo\\TKKH.cs",
+              "RelativeDocumentMoniker": "TKKH.cs",
+              "ToolTip": "D:\\LapTrinhCSDL\\2151050152_2151053051_2151050514\\QuanLyBangKeo\\TKKH.cs",
+              "RelativeToolTip": "TKKH.cs",
+              "ViewState": "AQIAAGEAAAAAAAAAAAAwwHsAAAA4AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-17T17:59:26.383Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-14T13:42:19.582Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "TKBC.cs",
+              "DocumentMoniker": "D:\\LapTrinhCSDL\\2151050152_2151053051_2151050514\\QuanLyBangKeo\\TKBC.cs",
+              "RelativeDocumentMoniker": "TKBC.cs",
+              "ToolTip": "D:\\LapTrinhCSDL\\2151050152_2151053051_2151050514\\QuanLyBangKeo\\TKBC.cs",
+              "RelativeToolTip": "TKBC.cs",
+              "ViewState": "AQIAAKEAAAAAAAAAAADwv80AAAA8AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-12T16:45:21.148Z"
             }
           ]
         }
